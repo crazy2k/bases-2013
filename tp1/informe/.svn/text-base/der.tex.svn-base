@@ -1,0 +1,57 @@
+\section{Diagrama Entidad-Relaci\'on}
+\thispagestyle{empty}
+\begin{figure}[H]
+    \centering
+    \subfloat[der]
+    {\includegraphics[scale=0.33]{./img/der-r.png}}    
+\end{figure} 
+
+\subsection{Restricciones}
+\begin{itemize}
+    \item
+            El valor del atributo Grupo A/B en \textbf{Equipo nacional} 
+            podr\'a ser \textbf{A} o \textbf{B} \'unicamente.
+    
+    \item   
+            Un partido tiene 4 cuartos.
+    
+    \item
+            La cardinalidad de N en la relaci\'on Partido-Estadisticas 
+            Jugador es 24 (12 por equipo).
+
+    \item
+            Dado un partido, exactamente 2 equipos pueden estar 
+            jug\'andolo.
+            
+    \item 
+            En \textbf{Partido} \textsl{id\_equipo\_local} e 
+            \textsl{id\_equipo\_visitante }
+            se corresponden con alguno de los 2 ids de los Equipos 
+            que disputan dicho partido.
+
+    \item   
+            En \textbf{Imparte\_Sancion\_En} 
+            \textsl{cant\_sanciones} debe ser menor 
+            o igual a 5, seg\'un las reglas del basket.
+\end{itemize}
+
+\subsection{Aclaraciones}
+\begin{itemize}
+    \item
+            Se puede conocer que arbitro sancion\'o a un jugador 
+            determinado a traves de la relacion 
+            \textbf{imparte sanci\'on en}
+            Arbitro - Estadisticas Jugador, ya que la estad\'istica 
+            es para un unico partido dado.
+
+    \item 
+            Se puede conocer el ganador de un partido por medio del 
+            atributo \textsl{ganador} del cuarto con el atributo 
+            \textsl{numero} y valor 4.
+
+    \item
+            Se puede saber si un jugador estuvo en un partido 
+            determinado si tiene tiene una estad\'istica 
+            (\textbf{Estad\'istica Jugador}), para ese partido.
+            
+\end{itemize}

@@ -1,0 +1,130 @@
+\section{Modelo F\'isico - Funcionalidades Adicionales}
+
+%\newpage
+\subsection{Triggers - Restricciones}
+\subsubsection{Hay un maximo de 12 jugadores por partido por equipo.}
+
+\begin{verbatim}
+delimiter $$
+create trigger nro_max_jugadores_partido 
+before insert 
+on Juego
+for each row begin
+    declare cant_jugadores INT(11);
+    select count(*) 
+    into @cant_jugadores
+    from Juego ju
+    
+    inner join Integrante inte 
+    on inte.nro_pasaporte = ju.nro_pasaporte_jugador
+    where   new.id_partido = ju.id_partido
+            and inte.id_equipo = 
+                        (select id_equipo 
+                        from Integrante inte2 
+                        where new.nro_pasaporte_jugador = inte2.nro_pasaporte);
+
+    if @cant_jugadores >= 13 then
+        set new.id_partido = NULL;
+    end if;
+end;
+$$
+delimiter ;
+\end{verbatim}
+
+\newpage
+\subsubsection{S\'olo hay 5 titulares por equipo para un mismo partido.}
+ 
+\begin{verbatim}
+delimiter $$
+create trigger 5_titulares_por_equipo 
+before insert 
+on Juego
+for each row begin  
+    if
+    ((
+        new.titular = 1 
+        and (
+            select count(*) 
+            from Juego ju
+            where ju.nro_pasaporte_jugador 
+            in 
+            (select inte.nro_pasaporte 
+            from Integrante inte 
+            where   id_equipo = 
+                            (select id_equipo 
+                            from Integrante inte2 
+                            where inte2.nro_pasaporte = new.nro_pasaporte)) 
+                    and ju.id_partido = new.id_partido
+            ) >= 5
+    ))
+    then
+        set new.id_partido = NULL;
+    end if;
+end;
+$$
+delimiter ;
+\end{verbatim}
+
+\newpage
+\subsubsection{Un partido no puede tener m\'as de 4 cuartos.}
+
+\begin{verbatim}
+delimiter $$
+create trigger no_mas_4_cuartos 
+before insert 
+on Juego
+for each row begin
+    if (new.numero >= 5) then
+        set new.id_partido = NULL;
+    end if;
+end;
+$$
+delimiter ;
+\end{verbatim}
+
+%\newpage
+\subsubsection{Hay s\'olo 2 equipos por partido.}
+
+\begin{verbatim}
+delimiter $$
+create trigger dos_equipos_por_partido 
+before insert 
+on Juega
+for each row begin
+    if
+    (
+        (
+            select count(*) 
+            from Juega ju 
+            where new.id_partido = ju.id_partido
+        ) >= 2
+    )
+    then
+        set new.id_partido = NULL;
+    end if;
+end;
+$$
+delimiter ;
+\end{verbatim}
+
+\newpage
+\subsubsection{Hay 4 equipos por grupo.}
+
+\begin{verbatim}
+delimiter $$
+create trigger solo_4_equipos_x_grupo 
+before insert 
+on Equipo_Nacional
+for each row begin
+    declare cant_equipos INT(11);
+    select count(*) INTO @cant_equipos
+    from Equipo_Nacional equ
+    where   new.grupo = equ.grupo;
+    
+    if @cant_equipos >= 4 then
+        set new.id_equipo = NULL;
+    end if;
+end; 
+$$
+delimiter ;
+\end{verbatim}

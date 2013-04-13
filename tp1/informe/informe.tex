@@ -1,0 +1,59 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{a4wide}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{color}
+\usepackage{url}
+\definecolor{lnk}{rgb}{0, 0, 0.4}
+\usepackage[colorlinks = true, linkcolor = lnk, citecolor = black,urlcolor = black]{hyperref}
+
+\usepackage{./otros/ulem}
+\usepackage{./otros/caratula}
+
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{framed}
+
+\usepackage[small, bf, labelformat = empty]{caption}	
+\usepackage{subfig}
+\usepackage{float}
+
+\usepackage{makeidx}
+\makeindex
+
+\begin{document}
+  %Carátula
+	\titulo{Trabajo Práctico 1}
+	\subtitulo{}
+	\fecha{24 de Abril de 2013}
+	\materia{Bases de Datos}
+	\integrante{Agustina Ciraco}{}{agusciraco@gmail.com}	
+	\integrante{Nadia Heredia}{589/08}{nheredia@dc.uba.ar}
+	\integrante{Pablo Antonio}{}{pabloa@gmail.com}
+	\integrante{Vanesa Stricker}{}{vanesastricker@gmail.com}  
+	\maketitle
+
+	% Índice
+	\small
+	\newpage \printindex \tableofcontents
+	\normalsize
+
+	\newpage
+	\input{intro.tex}
+	\newpage
+	\input{der.tex}
+	\newpage
+	\input{mer.tex}
+	%\newpage
+	\input{suposiciones.tex}
+	\newpage
+	\input{fisica-pedida.tex}
+	\newpage
+	\input{fisica-adicional.tex}
+	\newpage
+	\input{dificultades.tex}
+	\input{conclusiones.tex}
+
+\end{document}

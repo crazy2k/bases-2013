@@ -1,0 +1,187 @@
+\section{Modelo Relacional}
+
+\begin{framed}\centering
+\underline{primary key} \hspace*{3cm}
+\dotuline{foreign key}
+\end{framed}
+
+\noindent
+INTEGRANTE(\underline{nro\_pasaporte}, fecha\_nacimiento, nombre, tipo\_integrante,id\_equipo) 
+
+\vspace*{0.5cm}
+\noindent
+CUERPO\_TECNICO(\underline{\dotuline{nro\_pasaporte}},función)
+
+\vspace*{0.5cm}
+\noindent
+JUGADOR(\underline{\dotuline{nro\_pasaporte}},club)
+
+\vspace*{0.5cm}
+\noindent
+EQUIPO\_NACIONAL(\underline{id\_equipo}, fecha\_arribo, lugar\_hospedaje, lugar\_hospedaje, Grupo\_A/B, \dotuline{id\_estadio\_asignado, id\_pais\_representado})
+
+\vspace*{0.5cm}
+\noindent
+ESTADIO(\underline{id\_estadio}, nombre)
+
+\vspace*{0.5cm}
+\noindent
+PAIS(\underline{id\_país}, nombre)
+
+\vspace*{0.5cm}
+\noindent
+ARBITRO(\underline{id\_arbitro}, nombre, \dotuline{id\_pais\_nacionalidad})
+
+\vspace*{0.5cm}
+\noindent
+PARTIDO(\underline{id\_partido}, fecha, horario\_comienzo, duración, \dotuline{id\_estadio, id\_fase}, id\_equipo\_local, id\_equipo\_visitante)
+
+\vspace*{0.5cm}
+\noindent
+RESULTADO\_CUARTO(\underline{\dotuline{id\_partido}, numero}, puntos\_local, puntos\_visitante)
+
+\vspace*{0.5cm}
+\noindent
+JUEGA(\underline{\dotuline{id\_equipo, id\_partido}})
+
+\vspace*{0.5cm}
+\noindent
+ARBITRA(\underline{\dotuline{id\_arbitro,id\_partido}})
+
+\vspace*{0.5cm}
+\noindent
+JUEGO(\underline{id\_juego}, puntos, asistencias, posición, rebotes, suplente/titular, \\
+\dotuline{id\_partido, nro\_pasaporte\_jugador}) 
+
+\vspace*{0.5cm}
+\noindent
+IMPARTE\_SANCION\_EN(\underline{\dotuline{id\_arbitro, id\_juego}}, cant\_sanciones)
+
+\vspace*{0.5cm}
+\noindent
+FASE(\underline{id\_fase}, descripción)
+
+\newpage
+\subsection{Restricciones}
+\begin{itemize}
+    \item
+            \textbf{Jugador}.\textsl{nro\_pasaporte} debe estar en 
+            \textbf{Integrante}.\textsl{nro\_pasaporte}
+
+    \item
+            \textbf{Cuerpo\_Tecnico}.\textsl{nro\_pasaporte} 
+            debe estar en \textbf{Integrante}.\textsl{nro\_pasaporte}
+            
+    \item
+            \textbf{Integrante}.\textsl{id\_equipo} no puede ser nulo y debe estar en 
+            \textbf{Equipo\_Nacional}.\textsl{id\_equipo}
+    
+    \item
+            \textbf{Equipo\_Nacional}.\textsl{id\_equipo} debe estar en 
+            \textbf{Integrante}.\textsl{id\_equipo}
+    
+    \item
+            \textbf{Equipo\_Nacional}.\textsl{id\_estadio\_asignado} no puede ser 
+            nulo y debe estar en \textbf{Estadio}.\textsl{id\_estadio}
+            
+    \item
+            \textbf{Estadio}.\textsl{id\_estadio} debe estar en 
+            \textbf{Equipo\_Nacional}.\textsl{id\_estadio\_asignado}
+    
+    \item
+            \textbf{Equipo\_Nacional}.\textsl{id\_pais\_representado} no puede ser 
+            nulo y debe estar en \textbf{Pais}.\textsl{id\_pais}
+            
+    \item
+            \textbf{Pais}.\textbf{id\_pais} puede no estar en 
+            \textbf{Equipo\_Nacional}.\textsl{id\_pais\_representado}
+            
+    \item
+            \textbf{Pais}.\textsl{id\_pais} no puede estar más de una vez en 
+            \textbf{Equipo\_Nacional}.\textsl{id\_pais\_representado}
+            
+    \item
+            \textbf{Arbitro}.\textsl{id\_pais\_nacionalidad} no puede ser nulo y 
+            debe estar en \textbf{Pais}.\textsl{id\_pais}
+            
+    \item
+            \textbf{Pais}.\textsl{id\_pais} puede no estar en 
+            \textbf{Arbitro}.\textsl{id\_pais\_nacionalidad}
+            
+    \item
+            \textbf{Pais}.\textsl{id\_pais} no puede estar más de una vez en 
+            \textbf{Arbitro}.\textsl{id\_pais\_nacionalidad}
+            
+    \item
+            \textbf{Partido}.\textsl{id\_estadio} no puede ser nulo y debe estar en 
+            \textbf{Estadio}.\textsl{id\_estadio}
+            
+    \item        
+            \textbf{Equipo\_Nacional}.\textsl{id\_equipo} debe estar en 
+            \textbf{Juega}.\textsl{id\_equipo}
+            
+    \item
+            \textbf{Partido}.\textsl{id\_partido} debe estar en \textbf{Juega}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Juega}.\textsl{id\_partido} debe estar en \textbf{Partido}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Juega}.\textsl{id\_equipo} debe estar en 
+            \textbf{Equipo\_Nacional}.\textsl{id\_equipo}
+            
+    \item
+            \textbf{Arbitro}.\textsl{id\_partido} debe estar en \textbf{Arbitra}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Partido}.\textsl{id\_partido} debe estar en \textbf{Arbitra}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Arbitra}.\textsl{id\_partido} debe estar en \textbf{Arbitro}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Arbitra}.\textsl{id\_partido} debe estar en \textbf{Partido}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Juego}.\textsl{id\_juego} debe estar en 
+            \textbf{Imparte\_Sancion\_En}.\textsl{id\_juego}
+            
+    \item
+            \textbf{Arbitro}.\textsl{id\_partido} debe estar en 
+            \textbf{Imparte\_Sancion\_En}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Imparte\_Sancion\_En}.\textsl{id\_partido} debe estar en 
+            \textbf{Arbitro}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Imparte\_Sancion\_En}.\textsl{id\_juego} debe estar en 
+            \textbf{Juego}.\textsl{id\_juego}
+            
+    \item
+            \textbf{Partido}.id\_fase no puede ser nulo y debe estar en 
+            \textbf{Fase}.id\_fase
+            
+    \item
+            \textbf{Juego}.\textsl{id\_partido} no puede ser nulo y debe estar en 
+            \textbf{Partido}.\textsl{id\_partido}
+            
+    \item
+            \textbf{Juego}.\textsl{id\_juego} puede no estar en 
+            \textbf{Imparte\_Sansion\_En}.\textsl{id\_juego}
+            
+    \item
+            \textbf{Partido}.\textsl{id\_fase} no puede ser nulo y debe estar en \textbf{Fase}.\textsl{id\_fase}
+            
+    \item
+            \textbf{Juego}.\textsl{nro\_pasaporte\_jugador} no puede ser nulo y debe estar en \textbf{Jugador}.\textsl{nro\_pasaporte}
+            
+    \item
+            \textbf{Resultado\_Cuarto}.\textsl{id\_partido} debe estar en \textbf{Partido}.\textsl{id\_partido}
+\end{itemize}
+
+\subsection{Restricciones}
+\begin{itemize}
+    \item
+            Todos los estadios est\'an asignados a un equipo nacional para que concentren.
+\end{itemize}
