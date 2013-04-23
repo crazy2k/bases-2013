@@ -1,0 +1,76 @@
+\section{Modelo Relacional}
+
+% Notación
+\begin{framed} \centering
+  \underline{primary key} \hspace*{3cm}
+  \dotuline{foreign key}
+\end{framed}
+
+\vspace*{0.5cm}
+\noindent
+USUARIO(\underline{id\_user}, username, nombre)
+
+% Debiles de Usuario
+
+\vspace*{0.5cm}
+\noindent
+ENCUESTA(\underline{\dotuline{id\_user}, id\_encuesta}, viaja frecuentemente, 
+					preferencias de comida, ciudades elegidas, clase más frecuente,
+					época más frecuente, acompañantes)
+
+\vspace*{0.5cm}
+\noindent
+DATOS PERSONALES(\underline{\dotuline{id\_user}, nombre, apellido}, email,
+					profesión, fecha\_nacimiento)
+
+\vspace*{0.5cm}
+\noindent
+DATOS TARJETA(\underline{\dotuline{id\_user}, nro\_tarjeta}, fecha\_vencimiento)
+
+% Como distinguimos las dos relaciones???
+
+\vspace*{0.5cm}
+\noindent
+DIRECCIÓN(\underline{\dotuline{id\_user}, calle, nro}, localidad,
+					código postal)
+
+\vspace*{0.5cm}
+\noindent
+TELÉFONO(\underline{\dotuline{id\_user}, nro\_tel})
+
+
+
+
+\vspace*{0.5cm}
+\noindent
+RESERVA(\underline{nroReserva}, fechaCaducidad, \dotuline{nroVuelo})
+
+\vspace*{0.5cm}
+\noindent
+VUELO(\underline{nroVuelo}, fechaPartida, \dotuline{aeropuertoSalida}, , \dotuline{aeropuertoLlegada}, \dotuline{nroAvion})
+
+\vspace*{0.5cm}
+\noindent
+AVION(\underline{nroAvion})
+
+\vspace*{0.5cm}
+\noindent
+PAIS(\underline{idPais}, nombre)
+
+\vspace*{0.5cm}
+\noindent
+AEROPUERTO(\underline{codAeropuerto}, \dotuline{idPais})
+
+% \newpage
+\subsection{Restricciones}
+\begin{itemize}
+  \item
+  
+  \item
+\end{itemize}
+
+\subsection{Aclaraciones}
+\begin{itemize}
+  \item
+
+\end{itemize}
