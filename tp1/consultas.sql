@@ -19,7 +19,7 @@ WHERE NOT EXISTS (
               (s.fecha_hora_salida >= DATE_SUB(NOW(), INTERVAL 5 YEAR)))  
         )
     )
-    AND u.username = dp.username
+    AND u.id_user = dp.id_user
 
 
 -- Consulta 2 (NO terminada)
