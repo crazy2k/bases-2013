@@ -1,24 +1,25 @@
-SELECT dp.nombre, dp.apellido, id_user
-FROM Usuario u, DatosPersonales dp
-WHERE NOT EXISTS 
+select dp.nombre, dp.apellido, id_user
+from usuario u, datospersonales dp
+where not exists 
 (
-    SELECT *
-    FROM Pais p
-    WHERE NOT EXISTS 
+    select *
+    from pais p
+    where not exists 
     (
-        SELECT *
-        FROM Hace h, Reserva r, Tiene t, Servicio s, Vuelo v,
-            Aeropuerto a, Ciudad c
-        WHERE u.id_user = h.id_user 
-        AND h.nro_reserva = r.nro_reserva 
-        AND r.nro_reserva = t.nro_reserva 
-        AND t.id_servicio = s.id_servicio
-        AND s.nro_vuelo = v.nro_vuelo 
-        AND (v.llega_a = a.id_a OR v.sale_de = a.id_a) 
-        AND a.id_ciudad = c.id_ciudad 
-        AND c.id_pais = p.id_pais 
-        AND ((s.fecha_hora_salida >= DATE_SUB(NOW(), INTERVAL 5 YEAR)) 
-            OR (s.fecha_hora_salida >= DATE_SUB(NOW(), INTERVAL 5 YEAR)))  
+        select *
+        from hace h, reserva r, tiene t, servicio s, vuelo v,
+            aeropuerto a, ciudad c
+        where u.id_user = h.id_user 
+        and h.nro_reserva = r.nro_reserva 
+        and r.nro_reserva = t.nro_reserva 
+        and t.id_servicio = s.id_servicio
+        and s.nro_vuelo = v.nro_vuelo 
+        and (v.llega_a = a.id_a or v.sale_de = a.id_a) 
+        and a.id_ciudad = c.id_ciudad 
+        and c.id_pais = p.id_pais 
+        and ((s.fecha >= date_sub(now(), interval 5 year)) 
+            or (s.fecha >= date_sub(now(), interval 5 year)))  
     )
 )
-AND u.id_user = dp.id_user
+and u.id_user = dp.id_user
+

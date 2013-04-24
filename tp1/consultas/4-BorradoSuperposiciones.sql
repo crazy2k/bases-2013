@@ -40,6 +40,9 @@ exists
 		and t2.nro_reserva = r1.nro_reserva
 		and s2.asociadoA = v2.nro_vuelo)
 
+	/* Fecha partida dentro de los próximos 7 días */
+	and data_sub(s.fecha_salida, now()) < 7
+
 	/* Menor precio */
 
 	#and precio < precio2
