@@ -26,18 +26,22 @@ begin
 	if data_sub(fecha_salida, now()) < 7 
 	and exists(
 	  select *
-	  from reserva r, tiene t, servicio s, hace h, usuario u
+	  from reserva r, tiene t, servicio s, 
+	  		hace h, usuario u, estado e
 	  where t.nro_reserva = r.nro_reserva
 	  and t.id_servicio = s.id_servicio
 	  and h.nro_reserva = r.nro_reserva
 	  and h.id_user = u.id_user
+	  and r.codigo_estado = e.codigo_estado
+	  and e.codigo_estado = 2 /* Confirmada */
 	  /* Hasta aca tenemos las reservas del usuario */
 	  and (not
 	  	(s.fecha_salida >= fecha_llegada 
 	  		or s.fecha_llegada <= fecha_salida))
 	)
 	begin
-	  raiserror ('Se superpone la reserva con una ya realizada.', 5, 1);
+	  raiserror ('Se superpone la reserva con 
+	  				una ya realizada.', 5, 1);
 	  rollback transaction;
 	  return
 	end;
