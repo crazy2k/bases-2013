@@ -8,23 +8,26 @@
 
 \vspace*{0.5cm}
 \noindent
-$\mathbf{Usuario}$(\underline{id\_user}, username, clave, nombre, apellido)
+Usuario(\underline{id\_user}, username, clave, nombre, apellido,
+	calle\_vive, nro\_vive, calle\_factura, nro\_factura)
 \begin{itemize}
-	\item $FK = \{(nombre, apellido, calle, nro)\}$
+	\item $FK = \{(nombre, apellido, calle\_vive, nro\_vive, calle\_factura,
+		nro\_factura)\}$
 	\item $PK = \{id\_user\}$
 	\item $CK = \{id\_user, (nombre, apellido)\}$
 	\item $Usuario.nombre$ y $Usuario.apellido$ deben estar en una misma fila
 		en $DatosPersonales.nombre$ y $DatosPersonales.apellido$
-	\item $Usuario.calle$ y $Usuario.nro$ deben estar en una misma fila
-		en $Direccion.calle$ y $Direccion.nro$
-
+	\item $Usuario.calle\_vive$ y $Usuario.nro\_vive$ deben estar en una misma
+		fila en $Direccion.calle$ y $Direccion.nro$
+	\item $Usuario.calle\_factura$ y $Usuario.nro\_factura$ deben estar en una
+		misma fila en $Direccion.calle$ y $Direccion.nro$
 \end{itemize}
 
 % Debiles de Usuario
 
 \vspace*{0.5cm}
 \noindent
-$\mathbf{Encuesta}$(\underline{\dotuline{id\_user}, id\_encuesta},
+Encuesta(\underline{\dotuline{id\_user}, id\_encuesta},
 	viaja\_frecuentemente, preferencias\_de\_comida, ciudades\_elegidas,
 	clase\_mas\_frecuente, epoca\_mas\_frecuente, acompaniantes)
 \begin{itemize}
@@ -35,12 +38,13 @@ $\mathbf{Encuesta}$(\underline{\dotuline{id\_user}, id\_encuesta},
 
 \vspace*{0.5cm}
 \noindent
-DatosPersonales(\underline{\dotuline{id\_user}, nombre, apellido}, email,
-					profesión, fecha\_nacimiento)
+DatosPersonales(\underline{\dotuline{id\_user}, nombre, apellido},
+	\dotuline{nacionalidad}, email, profesión, fecha\_nacimiento)
 \begin{itemize}
-	\item $FK = \{id\_user\}$
+	\item $FK = \{id\_user, id\_pais\}$
 	\item $PK = CK = \{(id\_user, nombre, apellido\}$
 	\item $DatosPersonales.id\_user$ debe estar en $Usuario.id\_user$
+	\item $DatosPersonales.id\_pais$ debe estar en $Pais.id\_pais$
 \end{itemize}
 
 \vspace*{0.5cm}
@@ -93,12 +97,34 @@ Reserva(\underline{nro\_reserva}, fecha\_caducidad, \dotuline{codigo\_estado})
 	\item $Reserva.codigo\_estado$ debe estar en $Estado.codigo\_estado$
 \end{itemize}
 
+
+\vspace*{0.5cm}
+\noindent
+Hace(\underline{\dotuline{nro\_reserva, id\_user}})
+\begin{itemize}
+	\item $FK = \{nro\_reserva, id\_user\}$
+	\item $PK = CK = \{(nro\_reserva, id\_user)\}$
+	\item $Hace.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
+	\item $Hace.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
+
 \vspace*{0.5cm}
 \noindent
 Estado(\underline{codigo\_estado}, descripcion)
 \begin{itemize}
 	\item $FK = \emptyset$
 	\item $PK = CK = \{codigo\_estado\}$
+\end{itemize}
+
+\vspace*{0.5cm}
+\noindent
+Tiene(\underline{\dotuline{nro\_reserva, id\_servicio, id\_clase}})
+\begin{itemize}
+	\item $FK = \{nro\_reserva, id\_servicio, id\_clase\}$
+	\item $PK = CK = \{(nro\_reserva, id\_servicio, id\_clase)\}$
+	\item $Tiene.id\_servicio$ debe estar en $Servicio.id\_servicio$
+	\item $Tiene.id\_clase$ debe estar en $Clase.id\_clase$
+	\item $Tiene.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
 \end{itemize}
 
 \vspace*{0.5cm}
@@ -111,6 +137,27 @@ Servicio(\underline{id\_servicio}, fecha\_salida, fecha\_llegada,
 	\item $Servicio.nro\_vuelo$ debe estar en $Vuelo.nro\_vuelo$
 	\item $Servicio.modelo$ debe estar en $Avion.modelo$
 \end{itemize}
+
+\vspace*{0.5cm}
+\noindent
+Brinda(\underline{\dotuline{id\_servicio, id\_clase}}, precio)
+\begin{itemize}
+	\item $FK = \{id\_servicio, id\_clase\}$
+	\item $PK = CK = \{(id\_servicio, id\_clase)\}$
+	\item $Brinda.id\_servicio$ debe estar en $Servicio.id\_servicio$
+	\item $Brinda.id\_clase$ debe estar en $Clase.id\_clase$
+\end{itemize}
+
+\vspace*{0.5cm}
+\noindent
+Clase(\underline{\dotuline{nro\_reserva, id\_user}})
+\begin{itemize}
+	\item $FK = \{nro\_reserva, id\_user\}$
+	\item $PK = CK = \{(nro\_reserva, id\_user)\}$
+	\item $Hace.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
+	\item $Hace.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
+
 
 \vspace*{0.5cm}
 \noindent
@@ -131,6 +178,16 @@ Avion(\underline{modelo}, anio\_fabricacion, millas, asientos, origen)
 	\item $PK = CK = \{modelo\}$
 \end{itemize}
 
+\vspace*{0.5cm}
+\noindent
+SeDistribuyenEn(\underline{\dotuline{modelo, id\_clase}},
+	cantidad\_asientos)
+\begin{itemize}
+	\item $FK = \{modelo, id\_clase\}$
+	\item $PK = CK = \{(modelo, id\_clase)\}$
+	\item $SeDistribuyenEn.modelo$ debe estar en $Avion.modelo$
+	\item $SeDistribuyenEn.id\_clase$ debe estar en $Clase.id\_clase$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
