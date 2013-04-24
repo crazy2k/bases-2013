@@ -22,49 +22,99 @@ WHERE NOT EXISTS (
     AND u.id_user = dp.id_user
 
 
--- Consulta 2 (NO terminada)
+-- Consulta 2
 
-CREATE TRIGGER chequear_reservas_superpuestas
-BEFORE INSERT ON Tiene
-FOR EACH ROW
-BEGIN
-    fecha_salida := SELECT s.fecha_salida
-        FROM Servicio s
-        WHERE s.id_servicio = :NEW.id_servicio
+create trigger chequear_reservas_superpuestas
+before insertion on Reserva
+for each row
+begin
+	fecha_salida := select s.fecha_salida
+	from servicio s, tiene t	
+	where s.id_servicio = t.id_servicio 
+	and t.nro_reserva = :new.nro_reserva
 
-    aeropuerto_salida := SELECT a.id_a
-        FROM Servicio s, Vuelvo v, Aeropuerto a
-        WHERE :NEW.id_servicio = s.id_servicio = AND
-            s.nro_vuelo = v.nro_vuelo AND v.sale_de = a.id_a
+	fecha_llegada := select s.fecha_salida
+	from servicio s, tiene t
+	where s.id_servicio = t.id_servicio 
+	and t.nro_reserva = :new.nro_reserva
 
-    aeropuerto_llegada := SELECT a.id_a
-        FROM Servicio s, Vuelvo v, Aeropuerto a
-        WHERE :NEW.id_servicio = s.id_servicio = AND
-            s.nro_vuelo = v.nro_vuelo AND v.llega_a = a.id_a
+	aeropuerto_llegada := select a.id_a
+    from servicio s, tiene t, vuelvo v, aeropuerto a
+    where s.id_servicio = t.id_servicio 
+    and s.nro_vuelo = v.nro_vuelo 
+    and v.llega_a = a.id_a
 
-    id_user := SELECT u.id_user
-        FROM Usuario u, Hace h, Reserva r,
-        WHERE u.id_user = h.id_user AND h.nro_reserva = r.nro_reserva AND
-        r.nro_reserva = :NEW.nro_reserva
+	user := select u.id_user 
+	from usuario u, hace h
+	where h.id_user = u.id_user 
+	and h.nro_reserva = .new.nro_reserva
 
-    IF DATE_SUB(fecha_salida, NOW()) < 7 AND
-        EXISTS(
-            SELECT 1
-            FROM Hace h, Reserva r, Tiene t, Servicio s, Vuelo v
-            WHERE id_user = h.id_user AND h.nro_reserva = r.nro_reserva AND
-                r.nro_reserva = t.nro_reserva AND t.id_servicio = s.id_servicio AND
-                s.fecha_salida = fecha_salida AND s.nro_vuelo = v.nro_vuelo AND
-                v.llega_a = aeropuerto_salida AND v.sale_de = aeropuerto_llegada)
-        THEN
-            -- No permitir inserción de Tiene y borrar Reserva adecuadamente
-    END IF;
-END
+	if data_sub(fecha_salida, now()) < 7 
+	and exists(
+	  select *
+	  from reserva r, tiene t, servicio s, hace h, usuario u
+	  where t.nro_reserva = r.nro_reserva
+	  and t.id_servicio = s.id_servicio
+	  and h.nro_reserva = r.nro_reserva
+	  and h.id_user = u.id_user
+	  /* Hasta aca tenemos las reservas del usuario */
+	  and (not
+	  	(s.fecha_salida >= fecha_llegada 
+	  		or s.fecha_llegada <= fecha_salida))
+	)
+	begin
+	  raiserror ('Se superpone la reserva con una ya realizada.', 5, 1);
+	  rollback transaction;
+	  return
+	end;
+end;
 
 
--- Consulta 3 (NO terminada)
+-- Consulta 3
 
-CREATE PROCEDURE reservas_superpuestas()
-LANGUAGE SQL
-BEGIN
+delete from reserva r1
+where
+exists
+(
+	select *
+	from reserva r2, tiene t, servicio s, hace h, 
+			usuario u, vuelvo v
+	where t.nro_reserva = r2.nro_reserva
+	and t.id_servicio = s.id_servicio
+	and h.nro_reserva = r2.nro_reserva
+	and h.id_user = u.id_user
+	and s.asociadoA = v.nro_vuelo	
+	/* Hasta aca tenemos las reservas del usuario */
+	
+	/* Iguales fechas */
+	and s.fecha_salida = 
+		(select s2.fecha_salida
+		from servicio s2, tiene t2	
+		where s2.id_servicio = t2.id_servicio 
+		and t2.nro_reserva = r1.nro_reserva)
 
-END
+	and s.fecha_llega = 
+		(select s2.fecha_llegada
+		from servicio s2, tiene t2	
+		where s2.id_servicio = t2.id_servicio 
+		and t2.nro_reserva = r1.nro_reserva)
+
+	/* Iguales aeropuerto */
+	and v.saleDe = 
+		(select v2.saleDe
+		from servicio s2, tiene t2, vuelvo v2	
+		where s2.id_servicio = t2.id_servicio 
+		and t2.nro_reserva = r1.nro_reserva
+		and s2.asociadoA = v2.nro_vuelo)
+
+	and v.llegaA = 
+		(select v2.llegaA
+		from servicio s2, tiene t2, vuelvo v2	
+		where s2.id_servicio = t2.id_servicio 
+		and t2.nro_reserva = r1.nro_reserva
+		and s2.asociadoA = v2.nro_vuelo)
+
+	/* Menor precio */
+
+	#and precio < precio2
+)
