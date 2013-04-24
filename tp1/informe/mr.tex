@@ -8,58 +8,187 @@
 
 \vspace*{0.5cm}
 \noindent
-USUARIO(\underline{id\_user}, username, nombre)
+$\mathbf{Usuario}$(\underline{id\_user}, username, clave, nombre, apellido)
+\begin{itemize}
+	\item $FK = \{(nombre, apellido, calle, nro)\}$
+	\item $PK = \{id\_user\}$
+	\item $CK = \{id\_user, (nombre, apellido)\}$
+	\item $Usuario.nombre$ y $Usuario.apellido$ deben estar en una misma fila
+		en $DatosPersonales.nombre$ y $DatosPersonales.apellido$
+	\item $Usuario.calle$ y $Usuario.nro$ deben estar en una misma fila
+		en $Direccion.calle$ y $Direccion.nro$
+
+\end{itemize}
 
 % Debiles de Usuario
 
 \vspace*{0.5cm}
 \noindent
-ENCUESTA(\underline{\dotuline{id\_user}, id\_encuesta}, viaja frecuentemente, 
-					preferencias de comida, ciudades elegidas, clase más frecuente,
-					época más frecuente, acompañantes)
+$\mathbf{Encuesta}$(\underline{\dotuline{id\_user}, id\_encuesta},
+	viaja\_frecuentemente, preferencias\_de\_comida, ciudades\_elegidas,
+	clase\_mas\_frecuente, epoca\_mas\_frecuente, acompaniantes)
+\begin{itemize}
+	\item $FK = \{id\_user\}$
+	\item $PK = CK = \{(id\_user, id\_encuesta)\}$
+	\item $Encuesta.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-DATOS PERSONALES(\underline{\dotuline{id\_user}, nombre, apellido}, email,
+DatosPersonales(\underline{\dotuline{id\_user}, nombre, apellido}, email,
 					profesión, fecha\_nacimiento)
+\begin{itemize}
+	\item $FK = \{id\_user\}$
+	\item $PK = CK = \{(id\_user, nombre, apellido\}$
+	\item $DatosPersonales.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-DATOS TARJETA(\underline{\dotuline{id\_user}, nro\_tarjeta}, fecha\_vencimiento)
+DatosTarjeta(\underline{\dotuline{id\_user}, nro\_tarjeta}, fecha\_vencimiento)
+\begin{itemize}
+	\item $FK = \{id\_user\}$
+	\item $PK = CK = \{(id\_user, nro\_tarjeta\}$
+	\item $DatosTarjeta.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
 
 % Como distinguimos las dos relaciones???
 
 \vspace*{0.5cm}
 \noindent
-DIRECCIÓN(\underline{\dotuline{id\_user}, calle, nro}, localidad,
+Direccion(\underline{\dotuline{id\_user}, calle, nro}, localidad,
 					código postal)
+\begin{itemize}
+	\item $FK = \{id\_user\}$
+	\item $PK = CK = \{(id\_user, calle, numero)\}$
+	\item $Direccion.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-TELÉFONO(\underline{\dotuline{id\_user}, nro\_tel})
+Atiende(\underline{\dotuline{id\_user, nro\_tel}})
+\begin{itemize}
+	\item $FK = \{id\_user, nro\_tel\}$
+	\item $PK = CK = \{(id\_user, nro\_tel)\}$
+	\item $Atiende.id\_user$ debe estar en $Usuario.id\_user$
+	\item $Atiende.nro\_tel$ debe estar en $Telefono.nro\_tel$
+\end{itemize}
 
-
+\vspace*{0.5cm}
+\noindent
+Telefono(\underline{\dotuline{id\_user}, nro\_tel})
+\begin{itemize}
+	\item $FK = \{id\_user\}$
+	\item $PK = CK = \{(id\_user, nro\_tel)\}$
+	\item $Telefono.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
 
 
 \vspace*{0.5cm}
 \noindent
-RESERVA(\underline{nroReserva}, fechaCaducidad, \dotuline{nroVuelo})
+Reserva(\underline{nro\_reserva}, fecha\_caducidad, \dotuline{codigo\_estado})
+\begin{itemize}
+	\item $FK = \{estado\}$
+	\item $PK = CK = \{nro\_reserva\}$
+	\item $Reserva.codigo\_estado$ debe estar en $Estado.codigo\_estado$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-VUELO(\underline{nroVuelo}, fechaPartida, \dotuline{aeropuertoSalida}, , \dotuline{aeropuertoLlegada}, \dotuline{nroAvion})
+Estado(\underline{codigo\_estado}, descripcion)
+\begin{itemize}
+	\item $FK = \emptyset$
+	\item $PK = CK = \{codigo\_estado\}$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-AVION(\underline{nroAvion})
+Servicio(\underline{id\_servicio}, fecha\_salida, fecha\_llegada,
+	hora\_salida, hora\_llegada, \dotuline{nro\_vuelo, modelo})
+\begin{itemize}
+	\item $FK = \{nro\_vuelo, modelo\}$
+	\item $PK = CK = \{id\_servicio\}$
+	\item $Servicio.nro\_vuelo$ debe estar en $Vuelo.nro\_vuelo$
+	\item $Servicio.modelo$ debe estar en $Avion.modelo$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-PAIS(\underline{idPais}, nombre)
+Vuelo(\underline{nro\_vuelo}, \dotuline{aeropuerto\_salida},
+	\dotuline{aeropuerto\_llegada})
+\begin{itemize}
+	\item $FK = \{aeropuerto\_salida, aeropuerto\_llegada\}$
+	\item $PK = CK = \{nro\_vuelo\}$
+	\item $Vuelo.aeropuerto\_salida$ debe estar en $Aeropuerto.id\_a$
+	\item $Vuelo.aeropuerto\_llegada$ debe estar en $Aeropuerto.id\_a$
+\end{itemize}
 
 \vspace*{0.5cm}
 \noindent
-AEROPUERTO(\underline{codAeropuerto}, \dotuline{idPais})
+Avion(\underline{modelo}, anio\_fabricacion, millas, asientos, origen)
+\begin{itemize}
+	\item $FK = \emptyset$
+	\item $PK = CK = \{modelo\}$
+\end{itemize}
+
+
+\vspace*{0.5cm}
+\noindent
+Tripulante(\underline{id\_tripulante}, nombre)
+\begin{itemize}
+	\item $FK = \emptyset$
+	\item $PK = CK = \{id\_tripulante\}$
+\end{itemize}
+
+
+\vspace*{0.5cm}
+\noindent
+TripuladoPor(\underline{id\_tripulante, modelo})
+\begin{itemize}
+	\item $FK = \{id\_tripulante, modelo\}$
+	\item $PK = CK = \{(id\_tripulante, modelo)\}$
+	\item $TripuladoPor.id\_tripulante$ debe estar en
+		$Tripulante.id\_tripulante$
+	\item $TripuladoPor.modelo$ debe estar en $Avion.modelo$
+\end{itemize}
+
+\vspace*{0.5cm}
+\noindent
+Pais(\underline{id\_pais}, nombre\_pais)
+\begin{itemize}
+	\item $FK = \emptyset$
+	\item $PK = CK = \{id\_pais\}$
+\end{itemize}
+
+
+\vspace*{0.5cm}
+\noindent
+Ciudad(\underline{id\_ciudad}, nombre\_ciudad, \dotuline{id\_pais})
+\begin{itemize}
+	\item $FK = \{id\_pais\}$
+	\item $PK = CK = \{id\_ciudad\}$
+	\item $Ciudad.id\_pais$ debe estar en $Pais.id\_pais$
+\end{itemize}
+
+\vspace*{0.5cm}
+\noindent
+TelefonoAeropuerto(\underline{nro\_tel, \dotuline{id\_a}})
+\begin{itemize}
+	\item $FK = \{id\_a\}$
+	\item $PK = CK = \{(nro\_tel, id\_a\}$
+	\item $TelefonoAeropuerto.id\_a$ debe estar en $Aeropuerto.id\_a$
+\end{itemize}
+
+
+\vspace*{0.5cm}
+\noindent
+Aeropuerto(\underline{id\_a}, tasa, direccion, transporte, nombre\_aeropuerto,
+	\dotuline{id\_ciudad})
+\begin{itemize}
+	\item $FK = \{id\_ciudad\}$
+	\item $PK = CK = \{id\_a\}$
+	\item $Aeropuerto.id\_ciudad$ debe estar en $Ciudad.id\_ciudad$
+\end{itemize}
 
 % \newpage
 \subsection{Restricciones}
