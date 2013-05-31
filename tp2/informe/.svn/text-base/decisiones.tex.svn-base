@@ -1,0 +1,41 @@
+\section{Decisiones}
+
+\textsl{En esta secci\'on explicaremos algunas de las decisiones
+tomadas durante la realizaci\'on del trabajo pr\'actico.}
+
+\vspace*{0.5cm}
+
+Para los algoritmos de reemplazo de p\'aginas MRU y LRU no tomamos
+ninguna decisi\'on significativa, las implementaciones fueron
+bastante directas.
+
+\vspace*{0.3cm}
+
+En cambio, para realizar la implementaci\'on de touch count si
+tomamos algunas decisiones.
+
+\vspace*{0.3cm}
+
+Al buscar un buffer frame libre, lo que hacemos es recorrer la lista
+de hot frames y si alguno tiene el contador mayor a 2 se reordena.
+
+%\vspace*{0.3cm}
+
+%En el paper no se especifica si se debe ordenar toda la lista LRU o
+%si alcanza con ir ordenando mientras sea necesario, es decir que se
+%empieza a buscar y si un buffer frame no cumple la condici\'on se
+%ordena.
+
+\vspace*{0.3cm}
+
+El valor del contador que debe tener un frame para ser pasado a la
+hot region, seg\'un el paper es configurable, pero nosotros lo dejamos
+fijo en 2, que es el valor standard.
+
+Adem\'as, para el resto de las constantes que fueran configurables, los
+dejamos con su valor por default.
+
+
+
+
+
