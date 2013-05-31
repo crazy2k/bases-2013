@@ -16,6 +16,19 @@ public class Catalog
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
 	{
 		//TODO Completar
-		return null;
+		/* Recorrer la lista y obtener el que buscamos. */
+		
+		TableDescriptor result = null;
+		
+		for (int i = 0; i < tableDescriptors.size(); i++)
+		{
+			if (tableDescriptors.get(i).getTableId() == tableId)
+			{
+				result = tableDescriptors.get(i);
+				break;
+			}
+		}
+		
+		return result;
 	}
 }
