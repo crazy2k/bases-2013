@@ -7,9 +7,8 @@
 *.vrb
 *.snm
 
-*.class
-*.classpath
-*.settings
+*.class*
+*.prefs
 
 # Package Files #
 *.jar
