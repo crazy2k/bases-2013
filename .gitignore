@@ -1,0 +1,17 @@
+*.*~
+*.log
+*.aux
+*.nav
+*.out
+*.idx
+*.vrb
+*.snm
+
+*.class
+*.classpath
+*.settings
+
+# Package Files #
+*.jar
+*.war
+*.ear
