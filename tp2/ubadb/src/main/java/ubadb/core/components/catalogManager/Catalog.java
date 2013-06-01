@@ -11,7 +11,13 @@ import ubadb.core.common.TableId;
  */
 public class Catalog
 {
-	private List<TableDescriptor> tableDescriptors;
+	private List<TableDescriptor> tableDescriptors;	
+
+	public Catalog(List<TableDescriptor> tableDescriptors) 
+	{
+		super();
+		this.tableDescriptors = tableDescriptors;
+	}
 
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
 	{
@@ -20,11 +26,11 @@ public class Catalog
 		
 		TableDescriptor result = null;
 		
-		for (int i = 0; i < tableDescriptors.size(); i++)
+		for (TableDescriptor t : tableDescriptors)
 		{
-			if (tableDescriptors.get(i).getTableId() == tableId)
+			if (t.getTableId() == tableId)
 			{
-				result = tableDescriptors.get(i);
+				result = t;
 				break;
 			}
 		}
