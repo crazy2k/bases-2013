@@ -35,13 +35,13 @@ public class CatalogManagerImpl implements CatalogManager
 		String filename = filePathPrefix + catalogFilePath;
 		XStream xstream = new XStream();
 		XmlUtil xml = new XstreamXmlUtil(xstream);
-		List<TableDescriptor> l;
 		
 		try 
 		{
-			l = (List<TableDescriptor>) xml.fromXml(filename);
+			@SuppressWarnings("unchecked")
+			List<TableDescriptor> l = (List<TableDescriptor>) xml.fromXml(filename);
 			catalog = new Catalog(l);
-		} 
+		}
 		catch (XmlUtilException e) 
 		{			
 			e.printStackTrace();
