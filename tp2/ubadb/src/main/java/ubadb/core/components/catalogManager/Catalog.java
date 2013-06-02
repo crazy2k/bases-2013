@@ -19,16 +19,20 @@ public class Catalog
 		this.tableDescriptors = tableDescriptors;
 	}
 
-	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
+	boolean idMatch(TableDescriptor t, TableId tableId)
 	{
-		//TODO Completar
+		return t.getTableId() == tableId;
+	}
+	
+	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
+	{		
 		/* Recorrer la lista y obtener el que buscamos. */
 		
-		TableDescriptor result = null;
+		TableDescriptor result = null;		
 		
 		for (TableDescriptor t : tableDescriptors)
 		{
-			if (t.getTableId() == tableId)
+			if (idMatch(t, tableId))
 			{
 				result = t;
 				break;

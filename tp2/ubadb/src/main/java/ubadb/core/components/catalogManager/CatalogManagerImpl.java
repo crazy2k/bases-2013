@@ -28,24 +28,16 @@ public class CatalogManagerImpl implements CatalogManager
 	}
 
 	@Override
-	public void loadCatalog() throws CatalogManagerException
+	public void loadCatalog() throws CatalogManagerException, XmlUtilException
 	{
-		//TODO Completar levantando desde un XML el catálogo
-		
-		String filename = filePathPrefix + catalogFilePath;
+		//TODO Completar levantando desde un XML el catálogo		
+
 		XStream xstream = new XStream();
-		XmlUtil xml = new XstreamXmlUtil(xstream);
-		
-		try 
-		{
-			@SuppressWarnings("unchecked")
-			List<TableDescriptor> l = (List<TableDescriptor>) xml.fromXml(filename);
-			catalog = new Catalog(l);
-		}
-		catch (XmlUtilException e) 
-		{			
-			e.printStackTrace();
-		}
+		XmlUtil xml = new XstreamXmlUtil(xstream);	
+		String filename = filePathPrefix + catalogFilePath;
+		@SuppressWarnings("unchecked")
+		List<TableDescriptor> l = (List<TableDescriptor>) xml.fromXml(filename);
+		catalog = new Catalog(l);
 	}
 
 	@Override
