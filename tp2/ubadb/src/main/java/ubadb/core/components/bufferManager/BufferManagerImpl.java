@@ -7,8 +7,10 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.catalogManager.CatalogManager;
+import ubadb.core.components.catalogManager.CatalogManagerException;
 import ubadb.core.components.diskManager.DiskManager;
 import ubadb.core.components.diskManager.DiskManagerException;
+import ubadb.core.util.xml.XmlUtilException;
 
 public class BufferManagerImpl implements BufferManager
 {
@@ -21,6 +23,15 @@ public class BufferManagerImpl implements BufferManager
 		this.diskManager = diskManager;
 		this.catalogManager = catalogManager;
 		this.bufferPool = bufferPool;
+		
+		try 
+		{
+			this.catalogManager.loadCatalog();
+		} 
+		catch (CatalogManagerException | XmlUtilException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -39,8 +50,7 @@ public class BufferManagerImpl implements BufferManager
 			else
 				bufferFrame = readFromDiskAndAddToPool(pageId);
 			
-			bufferFrame.pin();
-			
+			bufferFrame.pin();			
 			return bufferFrame.getPage();
 		}
 		catch(Exception e)
@@ -71,7 +81,6 @@ public class BufferManagerImpl implements BufferManager
 	public synchronized Page createNewPage(TableId tableId, byte[] pageContents) throws BufferManagerException
 	{
 		//TODO: Implementation deferred
-		//return null;
 		try
 		{
 			Page pageFromDisk = diskManager.createNewPage(tableId, pageContents);			
