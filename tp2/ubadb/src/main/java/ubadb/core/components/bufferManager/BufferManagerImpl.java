@@ -71,19 +71,17 @@ public class BufferManagerImpl implements BufferManager
 	public synchronized Page createNewPage(TableId tableId, byte[] pageContents) throws BufferManagerException
 	{
 		//TODO: Implementation deferred
-		return null;
-//		try
-//		{
-//			Page pageFromDisk = diskManager.createNewPage(tableId, pageContents);
-//			
-//			addNewPageToBufferPool(pageFromDisk);
-//			
-//			return pageFromDisk;
-//		}
-//		catch(Exception e)
-//		{
-//			throw new BufferManagerException("Cannot create new page", e);
-//		}
+		//return null;
+		try
+		{
+			Page pageFromDisk = diskManager.createNewPage(tableId, pageContents);			
+			addNewPageToBufferPool(pageFromDisk);			
+			return pageFromDisk;
+		}
+		catch(Exception e)
+		{
+			throw new BufferManagerException("Cannot create new page", e);
+		}
 	}
 	
 	/**
@@ -91,8 +89,7 @@ public class BufferManagerImpl implements BufferManager
 	 */
 	private BufferFrame readFromDiskAndAddToPool(PageId pageId) throws DiskManagerException, BufferPoolException
 	{
-		Page pageFromDisk = diskManager.readPage(pageId);
-		
+		Page pageFromDisk = diskManager.readPage(pageId);		
 		BufferFrame bufferFrame = addNewPageToBufferPool(pageFromDisk);
 		
 		return bufferFrame;
