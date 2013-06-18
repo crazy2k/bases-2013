@@ -5,3 +5,23 @@ implementaciones de los algoritmos.}
 
 \vspace*{0.5cm}
 
+Se dese\'o implementar un Buffer Pool que delegara el almacenamiento 
+de cada página en distintos pools. 
+Esto se logró con \texttt{MultipleBufferPool}, que mantiene una lista 
+de \texttt{BufferPoolAssignment}, cada uno de los cuales 
+\textit{acepta} algunas páginas y otras no.
+Para aquellas que acepta, les asigna un buffer pool.
+
+\vspace*{0.3cm}
+
+En nuestro caso particular utilizamos un pool por tabla, por lo
+cual tenemos \\
+\texttt{TableToBufferPoolAssignment} que acepta todas 
+las páginas de una tabla en particular.
+Tenemos tambi\'en una subclase de \texttt{MultipleBufferPool} 
+(\texttt{PerTableMultipleBufferPool}) que recibe una lista de 
+definiciones de pools (\texttt{TablePool}); es decir, las 
+tablas para las que creará un pool, el porcentaje del tamaño
+total que asignará a cada tabla y la estrategia de reemplazo
+de cada pool.
+

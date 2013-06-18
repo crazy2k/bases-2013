@@ -1,15 +1,35 @@
 \section{Conclusiones}
 
-\subsection{Comparaci\'on}
-
-
-\subsection{Conclusiones}
-
-\textsl{En esta subsecci\'on presentaremos nuestras observaciones
-sobre las comparaciones explicadas en la subsecci\'on anterior.}
+\textsl{En esta secci\'on presentaremos nuestras observaciones
+sobre las comparaciones explicadas en la secci\'on anterior.}
 
 \vspace*{0.5cm}
 
+Al dividir el espacio de memoria en distintos pools, uno por tabla,
+el rendimiento disminuyó.
+
+\vspace*{0.3cm}
+
+El rendimiento de cada estrategia depende fuertemente de la 
+estructura de la traza, y probablemente estos resultados se 
+deban a la naturaleza artificial de las utilizadas. 
+Por ejemplo, en general se supone que una estrategia LRU es
+razonable porque luego de acceder un bloque es probable que 
+esto vuelva a suceder. 
+
+Sin embargo, al armar una traza al azar o siguiendo algún 
+criterio arbitrario, esto no se verifica.
+
+
+Sería interesante, por lo tanto, realizar las pruebas con 
+trazas más reales, y con mayor cantidad, que que correspondan 
+a contextos variados, analizando si por ejemplo se verifica la
+cercanía temporal de los pedidos.
+
+En esos caso, sería de esperar que las estrategias utilizadas
+por Oracle fueran eficientes.
+ % porque seguramente estén 
+% respaldadas por importantes investigaciones.
 
 
 
