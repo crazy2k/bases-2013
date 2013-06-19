@@ -16,8 +16,11 @@ sección correspondiente.
 \vspace*{0.5cm}
 
 Puede pasar que bloques de distinta naturaleza interfieran entre sí, por lo 
-cual en Oracle, se decidió utilizar \textit{m\'ultiples buffers}. 
-Existen tres pools fijos
+cual en Oracle, se decidió utilizar \textit{m\'ultiples buffers}. Además 
+estos múltiples buffers en general se adecuan a la mayoría de los sistemas.
+Oracle implementa \textit{m\'ultiples buffers} utilizando una división de 
+buffers basado en patrones de acceso atipico. Esta categorización queda en
+tres pools fijos:
 
 \begin{itemize}
   \item \textbf{Keep pool}
@@ -26,8 +29,8 @@ Existen tres pools fijos
 
   \item \textbf{Recycle pool}
     Utilizado para objetos poco usados que no se desea que interfieran 
-    con el resto. En general son objetos grandes, y no se quiere que
-    estos ocupen lugar en el pool default.
+    con el resto. En general son datos que no van a ser accedidos 
+    frecuentemente, y no se quiere que estos ocupen lugar en el pool default.
 
   \item \textbf{Default pool} 
     Utilizado para todo lo dem\'as.
