@@ -15,10 +15,10 @@ public class MixedTraceGenerator extends PageReferenceTraceGenerator
 		PageReferenceTrace mixedTrace = new PageReferenceTrace();
 
 		//Use a queue to manipulate traces easily
-		Queue<PageReferenceTrace> totalTracesQueue = new LinkedList<>(traces);
+		Queue<PageReferenceTrace> totalTracesQueue = new LinkedList<PageReferenceTrace>(traces);
 		
 		//Get initial concurrent traces
-		List<PageReferenceTrace> concurrentTraces = new ArrayList<>();
+		List<PageReferenceTrace> concurrentTraces = new ArrayList<PageReferenceTrace>();
 		for(int i=0; i < maxConcurrentTracesCount; i++)
 			concurrentTraces.add(totalTracesQueue.poll());
 			

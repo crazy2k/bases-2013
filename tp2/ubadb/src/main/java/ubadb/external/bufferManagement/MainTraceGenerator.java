@@ -18,8 +18,8 @@ public class MainTraceGenerator
 {
 	public static void main(String[] args) throws Exception
 	{
-//		basicDataSet();
-		complexDataSet();
+		basicDataSet();
+//		complexDataSet();
 	}
 	
 	private static void basicDataSet() throws Exception
@@ -121,7 +121,7 @@ public class MainTraceGenerator
 
 	private static List<PageReferenceTrace> buildTracesToMix(String folderName, int totalTracesCount, PageReferenceTraceSerializer serializer) throws Exception
 	{
-		List<PageReferenceTrace> tracesToMix = new ArrayList<>();
+		List<PageReferenceTrace> tracesToMix = new ArrayList<PageReferenceTrace>();
 		Random random = new Random(System.currentTimeMillis());
 		
 		String[] traceFiles = Paths.get(folderName).toFile().list();

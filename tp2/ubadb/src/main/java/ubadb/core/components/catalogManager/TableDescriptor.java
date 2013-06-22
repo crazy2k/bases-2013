@@ -8,6 +8,11 @@ public class TableDescriptor
 	private String tableName;
 	private String tablePath;
 
+	public TableDescriptor()
+	{
+		
+	}
+	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath)
 	{
 		this.tableId = tableId;

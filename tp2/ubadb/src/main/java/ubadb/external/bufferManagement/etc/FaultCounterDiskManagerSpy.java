@@ -15,7 +15,7 @@ public class FaultCounterDiskManagerSpy implements DiskManager
 	
 	public FaultCounterDiskManagerSpy()
 	{
-		pageIdsWithFault = new ArrayList<>();
+		pageIdsWithFault = new ArrayList<PageId>();
 	}
 	
 	public Page readPage(PageId pageId) throws DiskManagerException

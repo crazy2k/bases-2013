@@ -1,16 +1,13 @@
 package ubadb.core.components.catalogManager;
 
-//import java.io.FileNotFoundException;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 
 import ubadb.core.common.TableId;
-
-import ubadb.core.components.catalogManager.Catalog;
-import ubadb.core.components.catalogManager.CatalogManagerException;
-import ubadb.core.components.catalogManager.TableDescriptor;
-
 import ubadb.core.util.xml.XmlUtil;
 import ubadb.core.util.xml.XmlUtilException;
 import ubadb.core.util.xml.XstreamXmlUtil;
@@ -28,17 +25,21 @@ public class CatalogManagerImpl implements CatalogManager
 	}
 
 	@Override
-	public void loadCatalog() throws CatalogManagerException, XmlUtilException
+	public void loadCatalog() throws CatalogManagerException
 	{
-		//TODO Completar levantando desde un XML el catálogo		
-
+		//TODO Completar levantando desde un XML el catálogo
 		XStream xstream = new XStream();
-		XmlUtil xml = new XstreamXmlUtil(xstream);	
+		//XmlUtil xml = new XstreamXmlUtil(xstream);	
 		String filename = filePathPrefix + catalogFilePath;
-		@SuppressWarnings("unchecked")
-		List<TableDescriptor> l = (List<TableDescriptor>) xml.fromXml(filename);
-		catalog = new Catalog(l);
+		try {
+			catalog = (Catalog) xstream.fromXML(new FileInputStream(filename));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
+
 
 	@Override
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)

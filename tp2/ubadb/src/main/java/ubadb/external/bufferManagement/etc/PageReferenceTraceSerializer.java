@@ -24,8 +24,10 @@ public class PageReferenceTraceSerializer
 	{
 		Path path = Paths.get(fileName);
 		
-		try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName(CHARSET))) 
+		try  
 		{
+			BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName(CHARSET));
+					
 			for(PageReference reference : trace.getPageReferences())
 			{
 				writer.write(convertPageReferenceToString(reference) + "\n");
@@ -42,8 +44,10 @@ public class PageReferenceTraceSerializer
 		PageReferenceTrace trace = new PageReferenceTrace();
 		
 		Path path = Paths.get(fileName);
-		try(BufferedReader reader = Files.newBufferedReader(path,Charset.forName(CHARSET)))
+		try
 		{
+			BufferedReader reader = Files.newBufferedReader(path,Charset.forName(CHARSET));
+			
 		    String line = reader.readLine();
 		    while (line != null)
 		    {

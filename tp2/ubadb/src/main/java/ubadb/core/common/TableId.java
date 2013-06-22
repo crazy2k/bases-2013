@@ -7,6 +7,11 @@ public class TableId
 {
 	private String internalName;	//internal name, not necessarily the same one defined by the user
 
+	public TableId()
+	{
+		
+	}
+	
 	public TableId(String internalName) 
 	{
 		this.internalName = internalName;
@@ -15,6 +20,12 @@ public class TableId
 	public String getInternalName()
 	{
 		return internalName;
+	}
+	
+	public boolean isEqual(TableId t)
+	{
+		boolean b = internalName.equals(t.getInternalName());
+		return b;
 	}
 
 	@Override

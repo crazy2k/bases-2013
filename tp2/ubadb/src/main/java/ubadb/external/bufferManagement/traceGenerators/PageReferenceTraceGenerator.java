@@ -15,7 +15,7 @@ public class PageReferenceTraceGenerator
 {
 	protected List<PageId> generateSequentialPages(String tableName, int from, int to)
 	{
-		List<PageId> ret = new ArrayList<>();
+		List<PageId> ret = new ArrayList<PageId>();
 		
 		for(int i=from; i < to; i++)
 			ret.add(new PageId(i, new TableId(tableName)));
@@ -25,7 +25,7 @@ public class PageReferenceTraceGenerator
 	
 	protected List<PageId> generateRandomPages(String tableName, int pageCount, int fileTotalPagesCount)
 	{
-		List<PageId> ret = new ArrayList<>();
+		List<PageId> ret = new ArrayList<PageId>();
 		Random random = new Random(System.currentTimeMillis());
 		
 		for(int i=0; i < pageCount ; i++)

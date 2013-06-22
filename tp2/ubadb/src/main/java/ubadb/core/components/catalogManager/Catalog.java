@@ -11,17 +11,26 @@ import ubadb.core.common.TableId;
  */
 public class Catalog
 {
-	private List<TableDescriptor> tableDescriptors;	
+	private List<TableDescriptor> tableDescriptors;
 
-	public Catalog(List<TableDescriptor> tableDescriptors) 
+	public Catalog()
 	{
-		super();
+		
+	}
+	
+	public Catalog(List<TableDescriptor> tableDescriptors)
+	{
 		this.tableDescriptors = tableDescriptors;
 	}
-
+	
+	public List<TableDescriptor> getTableDescriptors()
+	{
+		return tableDescriptors;
+	}
+	
 	boolean idMatch(TableDescriptor t, TableId tableId)
 	{
-		return t.getTableId() == tableId;
+		return t.getTableId().isEqual(tableId);
 	}
 	
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)

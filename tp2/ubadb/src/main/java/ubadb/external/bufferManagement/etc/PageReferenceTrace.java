@@ -11,7 +11,7 @@ public class PageReferenceTrace
 
 	public PageReferenceTrace()
 	{
-		pageReferences = new ArrayList<>();
+		pageReferences = new ArrayList<PageReference>();
 	}
 
 	public void addPageReference(PageReference pageReference)

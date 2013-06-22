@@ -10,6 +10,6 @@ public class CatalogManagerException extends Exception
 	
 	public CatalogManagerException(String message, Exception e)
 	{
-		super(message, e);
+		super(message,e);
 	}
 }

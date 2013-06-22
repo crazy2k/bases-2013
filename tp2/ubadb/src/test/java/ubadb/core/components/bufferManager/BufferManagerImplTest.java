@@ -9,8 +9,7 @@ import org.junit.Test;
 import ubadb.core.common.Page;
 import ubadb.core.common.PageId;
 import ubadb.core.common.TableId;
-import ubadb.core.components.catalogManager.CatalogManager;
-import ubadb.core.components.catalogManager.CatalogManagerImpl;
+import ubadb.core.components.bufferManager.BufferManagerImpl;
 import ubadb.core.testDoubles.BufferPoolSpy;
 import ubadb.core.testDoubles.DiskManagerSpy;
 
@@ -24,26 +23,15 @@ public class BufferManagerImplTest
 	private BufferManagerImpl bufferManager;
 	private DiskManagerSpy diskManagerSpy;
 	private BufferPoolSpy bufferPoolSpy;
-	private CatalogManagerImpl catalogManager;
 	private static final int BUFFER_POOL_MAX_SIZE = 2;
 	
 	@Before
 	public void setUp()
-
 	{
 		diskManagerSpy = new DiskManagerSpy();
-	
 		bufferPoolSpy = new BufferPoolSpy(BUFFER_POOL_MAX_SIZE);
-	
-		//catalog = new Catalog();	
-		catalogManager = new CatalogManagerImpl("catalog.xml", ".");
-	
-	   //bufferManager = new BufferManagerImpl(diskManagerSpy, null, bufferPoolSpy);	
-		bufferManager = new BufferManagerImpl(diskManagerSpy, catalogManager, bufferPoolSpy);
-
+		bufferManager = new BufferManagerImpl(diskManagerSpy, null, bufferPoolSpy);
 	}
-
-
 	
 	@Test
 	public void testReadPageThatIsInPool() throws Exception
