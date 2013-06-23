@@ -63,16 +63,8 @@ public class Catalog
 		
 		Catalog other = (Catalog) obj;		
 		
-		boolean res = true;
-		
-		for (TableDescriptor t : tableDescriptors)
-		{
-			if (! other.tableDescriptors.contains(t))
-			{
-				res = false;
-				break;
-			}
-		}
+		boolean res = tableDescriptors.containsAll(other.tableDescriptors);
+		res = res && other.tableDescriptors.containsAll(tableDescriptors);
 		
 		return res;
 	}
