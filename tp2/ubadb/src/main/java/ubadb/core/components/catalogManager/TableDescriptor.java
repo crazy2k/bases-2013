@@ -34,4 +34,9 @@ public class TableDescriptor
 	{
 		return tablePath;
 	}
+	
+	public boolean isEqual(TableDescriptor t)
+	{
+		return this.equals(t);		
+	}
 }

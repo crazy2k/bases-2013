@@ -16,35 +16,37 @@ import ubadb.core.util.xml.XstreamXmlUtil;
 import com.thoughtworks.xstream.XStream;
 
 
-public class CatalogManagerImplTest {
-	
+public class CatalogManagerImplTest 
+{	
 	private Catalog catalog;
-	private TableDescriptor td1 = new TableDescriptor(new TableId("1"), "Table1", "Table1");
-	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "Table2");
-	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "Table3");
+	private TableDescriptor td1 = new TableDescriptor(new TableId("1"), "Table1", "./Table1");
+	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "./Table2");
+	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "./Table3");
 	
 	@Before
 	public void setUp()
 	{
 	
-		List<TableDescriptor> tds = new LinkedList<TableDescriptor>();
-		tds.add(td1);
-		tds.add(td2);
-		tds.add(td3);
+		List<TableDescriptor> tableDescriptors = new LinkedList<TableDescriptor>();
+		tableDescriptors.add(td1);
+		tableDescriptors.add(td2);
+		tableDescriptors.add(td3);
 		
-		catalog = new Catalog(tds);
+		catalog = new Catalog(tableDescriptors);
 	}
 	
 	@Test
 	public void testLoadCatalog() throws Exception
 	{
-		XStream xstream = new XStream();
-		//XmlUtil xml = new XstreamXmlUtil(xstream);	
-		String filename = "catalogTestFile";
+		XStream xstream = new XStream();			
+		String filename = "catalogTestFile.xml";
 		xstream.toXML(catalog, new FileOutputStream(filename));
 		
-		CatalogManager cm = new CatalogManagerImpl("", filename);
-		cm.loadCatalog();
-		assertEquals(cm.getTableDescriptorByTableId(new TableId("1")), td1);
+		CatalogManager catalogManager = new CatalogManagerImpl("", filename);
+		catalogManager.loadCatalog();
+		
+		TableDescriptor t = catalogManager.getTableDescriptorByTableId(new TableId("1"));
+		assertEquals(t.getTableName(), td1.getTableName());
+		assertEquals(t.getTablePath(), td1.getTablePath());
 	}
 }
