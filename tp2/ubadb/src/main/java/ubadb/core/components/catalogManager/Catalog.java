@@ -4,7 +4,6 @@ import java.util.List;
 
 import ubadb.core.common.TableId;
 
-
 /**
  * Serializable class that represents the catalog
  * 
@@ -14,8 +13,7 @@ public class Catalog
 	private List<TableDescriptor> tableDescriptors;
 
 	public Catalog()
-	{
-		
+	{		
 	}
 	
 	public Catalog(List<TableDescriptor> tableDescriptors)
@@ -28,9 +26,9 @@ public class Catalog
 		return tableDescriptors;
 	}
 	
-	boolean idMatch(TableDescriptor t, TableId tableId)
+	private boolean idMatch(TableDescriptor t, TableId tableId)
 	{
-		return t.getTableId().isEqual(tableId);
+		return t.getTableId().equals(tableId);
 	}
 	
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
@@ -49,5 +47,33 @@ public class Catalog
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Catalog other = (Catalog) obj;		
+		
+		boolean res = true;
+		
+		for (TableDescriptor t : tableDescriptors)
+		{
+			if (! other.tableDescriptors.contains(t))
+			{
+				res = false;
+				break;
+			}
+		}
+		
+		return res;
 	}
 }

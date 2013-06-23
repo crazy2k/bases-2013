@@ -3,14 +3,10 @@ package ubadb.core.components.catalogManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 
 import ubadb.core.common.TableId;
-import ubadb.core.util.xml.XmlUtil;
-import ubadb.core.util.xml.XmlUtilException;
-import ubadb.core.util.xml.XstreamXmlUtil;
 
 public class CatalogManagerImpl implements CatalogManager
 {
@@ -28,19 +24,25 @@ public class CatalogManagerImpl implements CatalogManager
 	public void loadCatalog() throws CatalogManagerException
 	{
 		//TODO Completar levantando desde un XML el catálogo
-		XStream xstream = new XStream();
-		//XmlUtil xml = new XstreamXmlUtil(xstream);	
+		XStream xstream = new XStream();			
 		String filename = filePathPrefix + catalogFilePath;
-		try {
+		
+		try 
+		{
 			catalog = (Catalog) xstream.fromXML(new FileInputStream(filename));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (FileNotFoundException e) 
+		{
 			e.printStackTrace();
 		}
 		
 	}
 
-
+	public Catalog catalog()
+	{
+		return catalog;
+	}
+	
 	@Override
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)
 	{

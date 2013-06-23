@@ -22,11 +22,10 @@ public class TableId
 		return internalName;
 	}
 	
-	public boolean isEqual(TableId t)
+	/*public boolean isEqual(TableId t)
 	{
-		boolean b = internalName.equals(t.getInternalName());
-		return b;
-	}
+		return internalName.equals(t.getInternalName());		
+	}*/
 
 	@Override
 	public int hashCode()

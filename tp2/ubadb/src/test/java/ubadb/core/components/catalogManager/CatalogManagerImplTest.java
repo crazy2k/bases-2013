@@ -1,6 +1,7 @@
 package ubadb.core.components.catalogManager;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileOutputStream;
 import java.util.LinkedList;
@@ -10,11 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ubadb.core.common.TableId;
-import ubadb.core.util.xml.XmlUtil;
-import ubadb.core.util.xml.XstreamXmlUtil;
-
 import com.thoughtworks.xstream.XStream;
-
 
 public class CatalogManagerImplTest 
 {	
@@ -43,10 +40,8 @@ public class CatalogManagerImplTest
 		xstream.toXML(catalog, new FileOutputStream(filename));
 		
 		CatalogManager catalogManager = new CatalogManagerImpl("", filename);
-		catalogManager.loadCatalog();
+		catalogManager.loadCatalog();		
 		
-		TableDescriptor t = catalogManager.getTableDescriptorByTableId(new TableId("1"));
-		assertEquals(t.getTableName(), td1.getTableName());
-		assertEquals(t.getTablePath(), td1.getTablePath());
+		assertTrue(catalogManager.catalog().equals(catalog));
 	}
 }

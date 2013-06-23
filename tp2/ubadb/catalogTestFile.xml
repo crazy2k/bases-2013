@@ -5,21 +5,21 @@
         <internalName>1</internalName>
       </tableId>
       <tableName>Table1</tableName>
-      <tablePath>Table1</tablePath>
+      <tablePath>./Table1</tablePath>
     </ubadb.core.components.catalogManager.TableDescriptor>
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
         <internalName>2</internalName>
       </tableId>
       <tableName>Table2</tableName>
-      <tablePath>Table2</tablePath>
+      <tablePath>./Table2</tablePath>
     </ubadb.core.components.catalogManager.TableDescriptor>
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
         <internalName>3</internalName>
       </tableId>
       <tableName>Table3</tableName>
-      <tablePath>Table3</tablePath>
+      <tablePath>./Table3</tablePath>
     </ubadb.core.components.catalogManager.TableDescriptor>
   </tableDescriptors>
 </ubadb.core.components.catalogManager.Catalog>

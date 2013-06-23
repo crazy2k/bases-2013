@@ -9,8 +9,7 @@ public class TableDescriptor
 	private String tablePath;
 
 	public TableDescriptor()
-	{
-		
+	{		
 	}
 	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath)
@@ -35,8 +34,24 @@ public class TableDescriptor
 		return tablePath;
 	}
 	
-	public boolean isEqual(TableDescriptor t)
+	@Override
+	public boolean equals(Object obj) 
 	{
-		return this.equals(t);		
+		if (this == obj)
+			return true;
+		
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		TableDescriptor other = (TableDescriptor) obj;
+		
+		boolean res = this.tableId.equals(other.tableId);
+		res = res && this.tableName.equals(other.tableName);
+		res = res && this.tablePath.equals(other.tablePath);
+		
+		return res;
 	}
 }

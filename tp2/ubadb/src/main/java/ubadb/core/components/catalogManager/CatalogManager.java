@@ -6,4 +6,5 @@ public interface CatalogManager
 {
 	void loadCatalog() throws CatalogManagerException;
 	TableDescriptor getTableDescriptorByTableId(TableId tableId);
+	Catalog catalog();
 }
