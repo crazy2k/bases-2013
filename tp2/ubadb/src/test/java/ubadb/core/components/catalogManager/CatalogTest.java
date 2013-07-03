@@ -13,6 +13,7 @@ import ubadb.core.common.TableId;
 public class CatalogTest 
 {
 	private Catalog catalog;
+	//private 
 	private TableDescriptor td1 = new TableDescriptor(new TableId("1"), "Table1", "./Table1");
 	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "./Table2");
 	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "./Table3");

@@ -9,6 +9,7 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
+import ubadb.core.components.catalogManager.TableDescriptor;
 
 /**
  * A single buffer pool shared by all tables 
@@ -87,4 +88,22 @@ public class SingleBufferPool implements BufferPool
 	{
 		return framesMap.size();
 	}
+	
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if (this == obj)
+			return true;
+		
+		return false;
+		/*
+		SingleBufferPool other = (SingleBufferPool) obj;
+		
+		boolean res = this.maxBufferPoolSize.equals(other.maxBufferPoolSize);
+		res = res && 
+		
+		return res;
+		*/
+	}
+
 }

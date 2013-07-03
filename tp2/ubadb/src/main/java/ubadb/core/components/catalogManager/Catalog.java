@@ -11,6 +11,8 @@ import ubadb.core.common.TableId;
 public class Catalog
 {
 	private List<TableDescriptor> tableDescriptors;
+//	private Integer keepBufferSize;
+//	private Integer recycleBufferSize;
 
 	public Catalog()
 	{		
