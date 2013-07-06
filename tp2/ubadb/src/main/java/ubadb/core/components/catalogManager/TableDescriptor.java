@@ -9,7 +9,7 @@ public class TableDescriptor
 	private TableId tableId;
 	private String tableName;
 	private String tablePath;
-	private SingleBufferPool tableBuffer;
+	private SingleBufferPool tableBuffer; /* Ver si conviene poner un id en vez de esto */
 
 	public TableDescriptor()
 	{		

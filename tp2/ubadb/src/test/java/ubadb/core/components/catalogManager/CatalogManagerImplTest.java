@@ -44,4 +44,11 @@ public class CatalogManagerImplTest
 		
 		assertTrue(catalogManager.catalog().equals(catalog));
 	}
+	
+	@Test
+	public void testLoadCatalog2() throws Exception
+	{
+		/* TODO: crear un xml a mano y cargar el catálogo, 
+		 * verificando que esté todo bien. */
+	}
 }
