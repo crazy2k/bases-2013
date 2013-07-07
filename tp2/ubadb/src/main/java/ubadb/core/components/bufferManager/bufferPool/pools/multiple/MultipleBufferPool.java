@@ -11,7 +11,6 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
-import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
 import ubadb.core.components.catalogManager.Catalog;
 import ubadb.core.components.catalogManager.TableDescriptor;
 

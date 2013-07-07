@@ -1,15 +1,18 @@
 package ubadb.core.components.catalogManager;
 
 import ubadb.core.common.TableId;
-import ubadb.core.components.bufferManager.bufferPool.pools.multiple.DefaultBuffer;
+/*
+ * import ubadb.core.components.bufferManager.bufferPool.pools.multiple.DefaultBuffer;
 import ubadb.core.components.bufferManager.bufferPool.pools.single.SingleBufferPool;
+*/
 
 public class TableDescriptor
 {
 	private TableId tableId;
 	private String tableName;
 	private String tablePath;
-	private SingleBufferPool tableBuffer; /* Ver si conviene poner un id en vez de esto */
+	//private SingleBufferPool tableBuffer; /* Ver si conviene poner un id en vez de esto */
+	private String tableBuffer;
 
 	public TableDescriptor()
 	{		
@@ -17,7 +20,7 @@ public class TableDescriptor
 	
 	
 	
-	public TableDescriptor(TableId tableId, String tableName, String tablePath, SingleBufferPool tableBuffer)
+	public TableDescriptor(TableId tableId, String tableName, String tablePath, String tableBuffer)
 	{
 		this.tableId = tableId;
 		this.tableName = tableName;
@@ -27,7 +30,7 @@ public class TableDescriptor
 	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath)
 	{
-		this(tableId, tableName, tablePath, DefaultBuffer.getDefaultBuffer());
+		this(tableId, tableName, tablePath, "Default");
 	}
 
 	public TableId getTableId()
@@ -45,7 +48,7 @@ public class TableDescriptor
 		return tablePath;
 	}
 	
-	public SingleBufferPool getTableBuffer()
+	public String getTableBuffer()
 	{
 		return tableBuffer;
 	}

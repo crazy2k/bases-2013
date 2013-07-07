@@ -1,6 +1,5 @@
 package ubadb.core.components.catalogManager;
 
-//import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileOutputStream;
@@ -37,12 +36,12 @@ public class CatalogManagerImplTest
 	{
 		XStream xstream = new XStream();			
 		String filename = "catalogTestFile.xml";
-		xstream.toXML(catalog, new FileOutputStream(filename));
+		xstream.toXML(catalog, new FileOutputStream(filename));		
 		
-		CatalogManager catalogManager = new CatalogManagerImpl("", filename);
+		CatalogManager catalogManager = new CatalogManagerImpl("", filename);		
 		catalogManager.loadCatalog();		
 		
-		assertTrue(catalogManager.catalog().equals(catalog));
+		assertTrue(catalogManager.catalog().equals(catalog));		
 	}
 	
 	@Test
@@ -50,5 +49,6 @@ public class CatalogManagerImplTest
 	{
 		/* TODO: crear un xml a mano y cargar el catálogo, 
 		 * verificando que esté todo bien. */
+		assertTrue(true);
 	}
 }

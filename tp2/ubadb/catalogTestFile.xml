@@ -6,6 +6,7 @@
       </tableId>
       <tableName>Table1</tableName>
       <tablePath>./Table1</tablePath>
+      <tableBuffer>Default</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
@@ -13,6 +14,7 @@
       </tableId>
       <tableName>Table2</tableName>
       <tablePath>./Table2</tablePath>
+      <tableBuffer>Default</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
@@ -20,6 +22,7 @@
       </tableId>
       <tableName>Table3</tableName>
       <tablePath>./Table3</tablePath>
+      <tableBuffer>Default</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
   </tableDescriptors>
 </ubadb.core.components.catalogManager.Catalog>
