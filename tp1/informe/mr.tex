@@ -13,15 +13,9 @@
 	%, nombre, apellido,
 	%calle\_vive, nro\_vive, calle\_factura, nro\_factura)
 \begin{itemize}[noitemsep]
-	\item $FK = \{ \}$
+	\item $FK = \{nacionalidad\}$
 	\item $PK = CK = \{id\_user\}$
-	%\item $CK = \{id\_user, (nombre, apellido)\}$
-	%\item $Usuario.nombre$ y $Usuario.apellido$ deben estar en una misma fila
-	%	en $DatosPersonales.nombre$ y $DatosPersonales.apellido$
-	%\item $Usuario.calle\_vive$ y $Usuario.nro\_vive$ deben estar en una misma
-	%	fila en $Direccion.calle$ y $Direccion.nro$
-	%\item $Usuario.calle\_factura$ y $Usuario.nro\_factura$ deben estar en una
-	%	misma fila en $Direccion.calle$ y $Direccion.nro$
+	\item $Usuario.nacionalidad$ debe estar en $Pais.id\_pais$
 \end{itemize}
 
 % Debiles de Usuario
@@ -32,9 +26,8 @@
 	viaja\_frecuentemente, preferencias\_de\_comida, ciudades\_elegidas, \\
 	\hspace*{2cm} clase\_mas\_frecuente, epoca\_mas\_frecuente, acompaniantes)
 \begin{itemize}[noitemsep]
-	\item $FK = \{id\_user\}$
-	\item $PK = CK = \{(id\_user, id\_encuesta)\}$
-	\item $Encuesta.id\_user$ debe estar en $Usuario.id\_user$
+	\item $FK = \{\}$
+	\item $PK = CK = \{id\_encuesta\}$	
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -62,9 +55,8 @@
 \noindent
 \textbf{Telefono}(\underline{nro\_tel})
 \begin{itemize}[noitemsep]
-    \item $FK = \{id\_user\}$
-    \item $PK = CK = \{(id\_user, nro\_tel)\}$
-    \item $Telefono.id\_user$ debe estar en $Usuario.id\_user$
+    \item $FK = \{\}$
+    \item $PK = CK = \{nro\_tel\}$    
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -94,9 +86,8 @@
 \textbf{Direccion}(\underline{calle, nro}, 
                     localidad, código postal)
 \begin{itemize}[noitemsep]
-    \item $FK = \{id\_user\}$
-    \item $PK = CK = \{(id\_user, calle, numero)\}$
-    \item $Direccion.id\_user$ debe estar en $Usuario.id\_user$
+    \item $FK = \{\}$
+    \item $PK = CK = \{(calle, numero)\}$    
 \end{itemize}
 
 
