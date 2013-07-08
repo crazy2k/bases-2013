@@ -8,7 +8,8 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Usuario}(\underline{id\_user}, username, clave)
+\textbf{Usuario}(\underline{id\_user}, username, clave, 
+    \dotuline{nacionalidad})
 	%, nombre, apellido,
 	%calle\_vive, nro\_vive, calle\_factura, nro\_factura)
 \begin{itemize}[noitemsep]
@@ -27,9 +28,9 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Encuesta}(\underline{\dotuline{id\_user}, id\_encuesta},
-	viaja\_frecuentemente, preferencias\_de\_comida, ciudades\_elegidas,
-	clase\_mas\_frecuente, epoca\_mas\_frecuente, acompaniantes)
+\textbf{Encuesta}(\underline{id\_encuesta},
+	viaja\_frecuentemente, preferencias\_de\_comida, ciudades\_elegidas, \\
+	\hspace*{2cm} clase\_mas\_frecuente, epoca\_mas\_frecuente, acompaniantes)
 \begin{itemize}[noitemsep]
 	\item $FK = \{id\_user\}$
 	\item $PK = CK = \{(id\_user, id\_encuesta)\}$
@@ -39,7 +40,7 @@
 \vspace*{0.1cm}
 \noindent
 \textbf{DatosPersonales}(\underline{\dotuline{id\_user}, nombre, apellido},
-	\dotuline{nacionalidad}, email, profesión, fecha\_nacimiento)
+	email, profesión, fecha\_nacimiento)
 \begin{itemize}[noitemsep]
 	\item $FK = \{id\_user, id\_pais\}$
 	\item $PK = CK = \{(id\_user, nombre, apellido\}$
@@ -49,21 +50,21 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{DatosTarjeta}(\underline{\dotuline{id\_user}, nro\_tarjeta}, fecha\_vencimiento)
+\textbf{DatosTarjeta}(\underline{\dotuline{id\_user}, nro\_tarjeta}, 
+    fecha\_vencimiento)
 \begin{itemize}[noitemsep]
 	\item $FK = \{id\_user\}$
 	\item $PK = CK = \{(id\_user, nro\_tarjeta\}$
 	\item $DatosTarjeta.id\_user$ debe estar en $Usuario.id\_user$
 \end{itemize}
 
-\vspace*{0.1cm}
+
 \noindent
-\textbf{Direccion}(\underline{\dotuline{id\_user}, calle, nro}, 
-					localidad, código postal)
+\textbf{Telefono}(\underline{nro\_tel})
 \begin{itemize}[noitemsep]
-	\item $FK = \{id\_user\}$
-	\item $PK = CK = \{(id\_user, calle, numero)\}$
-	\item $Direccion.id\_user$ debe estar en $Usuario.id\_user$
+    \item $FK = \{id\_user\}$
+    \item $PK = CK = \{(id\_user, nro\_tel)\}$
+    \item $Telefono.id\_user$ debe estar en $Usuario.id\_user$
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -77,18 +78,66 @@
 \end{itemize}
 
 \newpage
+\vspace*{0.1cm}
 \noindent
-\textbf{Telefono}(\underline{\dotuline{id\_user}, nro\_tel})
+\textbf{Responde}(\underline{\dotuline{id\_a, nro\_tel}})
 \begin{itemize}[noitemsep]
-	\item $FK = \{id\_user\}$
-	\item $PK = CK = \{(id\_user, nro\_tel)\}$
-	\item $Telefono.id\_user$ debe estar en $Usuario.id\_user$
+    \item $FK = \{id\_a, nro\_tel\}$
+    \item $PK = CK = \{(id\_a, nro\_tel)\}$
+    \item $Atiende.id\_a$ debe estar en $Aeropuerto.id\_user$
+    \item $Atiende.nro\_tel$ debe estar en $Telefono.nro\_tel$
 \end{itemize}
 
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Reserva}(\underline{nro\_reserva}, fecha\_caducidad, \dotuline{codigo\_estado})
+\textbf{Direccion}(\underline{calle, nro}, 
+                    localidad, código postal)
+\begin{itemize}[noitemsep]
+    \item $FK = \{id\_user\}$
+    \item $PK = CK = \{(id\_user, calle, numero)\}$
+    \item $Direccion.id\_user$ debe estar en $Usuario.id\_user$
+\end{itemize}
+
+
+\vspace*{0.1cm}
+\noindent
+\textbf{Vive}(\underline{\dotuline{id\_user, calle, nro}})
+\begin{itemize}[noitemsep]
+    \item $FK = \{id\_user, calle, nro\}$
+    \item $PK = CK = \{(id\_user, calle, nro)\}$
+    \item $Vive.id\_user$ debe estar en $Usuario.id\_user$
+    \item $Vive.calle$ debe estar en $Direccion.calle$
+    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+\end{itemize}
+
+\vspace*{0.1cm}
+\noindent
+\textbf{Factura}(\underline{\dotuline{id\_user, calle, nro}})
+\begin{itemize}[noitemsep]
+    \item $FK = \{id\_user, calle, nro\}$
+    \item $PK = CK = \{(id\_user, calle, nro)\}$
+    \item $Vive.id\_user$ debe estar en $Usuario.id\_user$
+    \item $Vive.calle$ debe estar en $Direccion.calle$
+    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+\end{itemize}
+
+\vspace*{0.1cm}
+\noindent
+\textbf{Está}(\underline{\dotuline{id\_a, calle, nro}})
+\begin{itemize}[noitemsep]
+    \item $FK = \{id\_a, calle, nro\}$
+    \item $PK = CK = \{(id\_a, calle, nro)\}$
+    \item $Vive.id\_user$ debe estar en $Aeropuerto.id\_user$
+    \item $Vive.calle$ debe estar en $Direccion.calle$
+    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+\end{itemize}
+
+
+\vspace*{0.1cm}
+\noindent
+\textbf{Reserva}(\underline{nro\_reserva}, fecha\_caducidad, 
+    \dotuline{codigo\_estado})
 \begin{itemize}[noitemsep]
 	\item $FK = \{estado\}$
 	\item $PK = CK = \{nro\_reserva\}$
@@ -96,6 +145,7 @@
 \end{itemize}
 
 
+\newpage
 \vspace*{0.1cm}
 \noindent
 \textbf{Hace}(\underline{\dotuline{nro\_reserva, id\_user}})
@@ -148,7 +198,7 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Clase}(\underline{\dotuline{nro\_reserva, id\_user}})
+\textbf{Clase}(\underline{\dotuline{nro\_reserva, id\_user}}, descripcion)
 \begin{itemize}[noitemsep]
 	\item $FK = \{nro\_reserva, id\_user\}$
 	\item $PK = CK = \{(nro\_reserva, id\_user)\}$
@@ -157,6 +207,7 @@
 \end{itemize}
 
 
+\newpage
 \vspace*{0.1cm}
 \noindent
 \textbf{Vuelo}(\underline{nro\_vuelo}, \dotuline{aeropuerto\_salida},
@@ -170,7 +221,8 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Avion}(\underline{modelo}, anio\_fabricacion, millas, asientos, origen)
+\textbf{Avion}(\underline{id\_avion}, modelo, anio\_fabricacion, 
+    millas, asientos, origen)
 \begin{itemize}[noitemsep]
 	\item $FK = \emptyset$
 	\item $PK = CK = \{modelo\}$
@@ -214,7 +266,7 @@
 	\item $PK = CK = \{id\_pais\}$
 \end{itemize}
 
-\newpage
+% \newpage
 \noindent
 \textbf{Ciudad}(\underline{id\_ciudad}, nombre\_ciudad, \dotuline{id\_pais})
 \begin{itemize}[noitemsep]
@@ -225,16 +277,7 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{TelefonoAeropuerto}(\underline{nro\_tel, \dotuline{id\_a}})
-\begin{itemize}[noitemsep]
-	\item $FK = \{id\_a\}$
-	\item $PK = CK = \{(nro\_tel, id\_a\}$
-	\item $TelefonoAeropuerto.id\_a$ debe estar en $Aeropuerto.id\_a$
-\end{itemize}
-
-\vspace*{0.1cm}
-\noindent
-\textbf{Aeropuerto}(\underline{id\_a}, tasa, direccion, transporte, 
+\textbf{Aeropuerto}(\underline{id\_a}, tasa, transporte, 
 			nombre\_aeropuerto, \dotuline{id\_ciudad})
 \begin{itemize}[noitemsep]
 	\item $FK = \{id\_ciudad\}$

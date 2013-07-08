@@ -41,20 +41,26 @@
           destino Newark-New Jersey el día 26/04/2013, 15:00hs, Primera Clase''.
           En cambio, un ejemplo de vuelo es:
          ``Vuelos de Aeropuerto origen Barajas-Madrid, Aeropuerto destino 
-          JFK-New York, los días martes y jueve''.
+          JFK-New York, los días Martes y Jueves''.
 	
     \item Consideramos que los mensajes que el sistema le envía a los usuarios
           no son lo suficientemente relevantes para el problema que queremos
           modelar.
           
-    \item Una reserva que se encuentra en estado Realizada, está asociada con un
-    	  servicio cuya fecha y hora de salida es anterior a la fecha actual.
+    \item Una reserva que se encuentra en estado Realizada, está asociada 
+          con un servicio cuya fecha y hora de salida es anterior a la 
+          fecha actual.
     	  
 	\item La suma de la cantidad de asientos por clase en un avión (en la 
 		  interrelación se distribuyen en) es igual a lo que indica el 
 		  atributo asientos de la entidad avión.
 	
-	\item Este modelo no contempla la posibilidad de que la aerolinea cancele un
-		  vuelo. Con lo cual todo vuelo existente es efectuado.
+	\item Este modelo no contempla la posibilidad de que la aerolinea 
+          cancele un servicio. Con lo cual todo vuelo existente es efectuado.
+
+    \item Para todos los vuelos, el aeropuerto de salida y el de llegada son
+          diferentes.
+
+    \item Todos los servicios tienen la misma duración.
             
   \end{itemize}
