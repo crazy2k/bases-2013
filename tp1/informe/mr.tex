@@ -10,8 +10,6 @@
 \noindent
 \textbf{Usuario}(\underline{id\_user}, username, clave, 
     \dotuline{nacionalidad})
-	%, nombre, apellido,
-	%calle\_vive, nro\_vive, calle\_factura, nro\_factura)
 \begin{itemize}[noitemsep]
 	\item $FK = \{nacionalidad\}$
 	\item $PK = CK = \{id\_user\}$
@@ -98,8 +96,7 @@
     \item $FK = \{id\_user, calle, nro\}$
     \item $PK = CK = \{(id\_user, calle, nro)\}$
     \item $Vive.id\_user$ debe estar en $Usuario.id\_user$
-    \item $Vive.calle$ debe estar en $Direccion.calle$
-    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+    \item $Vive.(calle, nro)$ debe estar en $Direccion.(calle, nro)$
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -109,8 +106,7 @@
     \item $FK = \{id\_user, calle, nro\}$
     \item $PK = CK = \{(id\_user, calle, nro)\}$
     \item $Vive.id\_user$ debe estar en $Usuario.id\_user$
-    \item $Vive.calle$ debe estar en $Direccion.calle$
-    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+    \item $Vive.(calle, nro)$ debe estar en $Direccion.(calle, nro)$
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -120,61 +116,60 @@
     \item $FK = \{id\_a, calle, nro\}$
     \item $PK = CK = \{(id\_a, calle, nro)\}$
     \item $Vive.id\_user$ debe estar en $Aeropuerto.id\_user$
-    \item $Vive.calle$ debe estar en $Direccion.calle$
-    \item $Vive.nro$ debe estar en $Direccion.nro\_tel$
+    \item $Vive.(calle, nro)$ debe estar en $Direccion.(calle, nro)$
 \end{itemize}
 
 
 \vspace*{0.1cm}
 \noindent
 \textbf{Reserva}(\underline{nro\_reserva}, fecha\_caducidad, 
-    \dotuline{codigo\_estado})
+    \dotuline{id\_estado})
 \begin{itemize}[noitemsep]
 	\item $FK = \{estado\}$
 	\item $PK = CK = \{nro\_reserva\}$
-	\item $Reserva.codigo\_estado$ debe estar en $Estado.codigo\_estado$
+	\item $Reserva.id\_estado$ debe estar en $Estado.id\_estado$
 \end{itemize}
 
 
 \newpage
 \vspace*{0.1cm}
 \noindent
-\textbf{Hace}(\underline{\dotuline{nro\_reserva, id\_user}})
+\textbf{Hace}(\underline{\dotuline{id\_reserva, id\_user}})
 \begin{itemize}[noitemsep]
-	\item $FK = \{nro\_reserva, id\_user\}$
+	\item $FK = \{id\_reserva, id\_user\}$
 	\item $PK = CK = \{(nro\_reserva, id\_user)\}$
-	\item $Hace.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
+	\item $Hace.id\_reserva$ debe estar en $Reserva.id\_reserva$
 	\item $Hace.id\_user$ debe estar en $Usuario.id\_user$
 \end{itemize}
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Estado}(\underline{codigo\_estado}, descripcion)
+\textbf{Estado}(\underline{id\_estado}, descripcion)
 \begin{itemize}[noitemsep]
 	\item $FK = \emptyset$
-	\item $PK = CK = \{codigo\_estado\}$
+	\item $PK = CK = \{id\_estado\}$
 \end{itemize}
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Tiene}(\underline{\dotuline{nro\_reserva, id\_servicio, id\_clase}})
+\textbf{Tiene}(\underline{\dotuline{id\_reserva, id\_servicio, id\_clase}})
 \begin{itemize}[noitemsep]
-	\item $FK = \{nro\_reserva, id\_servicio, id\_clase\}$
-	\item $PK = CK = \{(nro\_reserva, id\_servicio, id\_clase)\}$
+	\item $FK = \{id\_reserva, id\_servicio, id\_clase\}$
+	\item $PK = CK = \{(id\_reserva, id\_servicio, id\_clase)\}$
 	\item $Tiene.id\_servicio$ debe estar en $Servicio.id\_servicio$
 	\item $Tiene.id\_clase$ debe estar en $Clase.id\_clase$
-	\item $Tiene.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
+	\item $Tiene.id\_reserva$ debe estar en $Reserva.id\_reserva$
 \end{itemize}
 
 \vspace*{0.1cm}
 \noindent
 \textbf{Servicio}(\underline{id\_servicio}, fecha\_salida, fecha\_llegada,
-		hora\_salida, hora\_llegada, \dotuline{nro\_vuelo, modelo})
+		hora\_salida, hora\_llegada, \dotuline{id\_vuelo, id\_av})
 \begin{itemize}[noitemsep]
-	\item $FK = \{nro\_vuelo, modelo\}$
+	\item $FK = \{id\_vuelo, id\_av\}$
 	\item $PK = CK = \{id\_servicio\}$
-	\item $Servicio.nro\_vuelo$ debe estar en $Vuelo.nro\_vuelo$
-	\item $Servicio.modelo$ debe estar en $Avion.modelo$
+	\item $Servicio.id\_vuelo$ debe estar en $Vuelo.id\_vuelo$
+	\item $Servicio.id\_av$ debe estar en $Avion.id\_avion$
 \end{itemize}
 
 \vspace*{0.1cm}
@@ -189,19 +184,17 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Clase}(\underline{\dotuline{nro\_reserva, id\_user}}, descripcion)
+\textbf{Clase}(\underline{id\_clase}, descripcion)
 \begin{itemize}[noitemsep]
-	\item $FK = \{nro\_reserva, id\_user\}$
-	\item $PK = CK = \{(nro\_reserva, id\_user)\}$
-	\item $Hace.nro\_reserva$ debe estar en $Reserva.nro\_reserva$
-	\item $Hace.id\_user$ debe estar en $Usuario.id\_user$
+	\item $FK = \{\}$
+	\item $PK = CK = \{id\_clase\}$
 \end{itemize}
 
 
 \newpage
 \vspace*{0.1cm}
 \noindent
-\textbf{Vuelo}(\underline{nro\_vuelo}, \dotuline{aeropuerto\_salida},
+\textbf{Vuelo}(\underline{id\_vuelo}, \dotuline{aeropuerto\_salida},
 		\dotuline{aeropuerto\_llegada})
 \begin{itemize}[noitemsep]
 	\item $FK = \{aeropuerto\_salida, aeropuerto\_llegada\}$
@@ -213,20 +206,20 @@
 \vspace*{0.1cm}
 \noindent
 \textbf{Avion}(\underline{id\_avion}, modelo, anio\_fabricacion, 
-    millas, asientos, origen)
+        millas, asientos, origen)
 \begin{itemize}[noitemsep]
 	\item $FK = \emptyset$
-	\item $PK = CK = \{modelo\}$
+	\item $PK = CK = \{id\_avion\}$
 \end{itemize}
 
 \vspace*{0.1cm}
 \noindent
-\textbf{SeDistribuyenEn}(\underline{\dotuline{modelo, id\_clase}},
-	cantidad\_asientos)
+\textbf{Distribuido}(\underline{\dotuline{id\_av, id\_clase}},
+	   asientos)
 \begin{itemize}[noitemsep]
-	\item $FK = \{modelo, id\_clase\}$
-	\item $PK = CK = \{(modelo, id\_clase)\}$
-	\item $SeDistribuyenEn.modelo$ debe estar en $Avion.modelo$
+	\item $FK = \{id\_av, id\_clase\}$
+	\item $PK = CK = \{(id\_av, id\_clase)\}$
+	\item $SeDistribuyenEn.id\_av$ debe estar en $Avion.id\_avion$
 	\item $SeDistribuyenEn.id\_clase$ debe estar en $Clase.id\_clase$
 \end{itemize}
 
@@ -240,18 +233,18 @@
 
 \vspace*{0.1cm}
 \noindent
-\textbf{TripuladoPor}(\underline{id\_tripulante, modelo})
+\textbf{TripuladoPor}(\underline{id\_tripulante, id\_av})
 \begin{itemize}[noitemsep]
-	\item $FK = \{id\_tripulante, modelo\}$
-	\item $PK = CK = \{(id\_tripulante, modelo)\}$
+	\item $FK = \{id\_tripulante, id\_av\}$
+	\item $PK = CK = \{(id\_tripulante, id\_av)\}$
 	\item $TripuladoPor.id\_tripulante$ debe estar en
 		$Tripulante.id\_tripulante$
-	\item $TripuladoPor.modelo$ debe estar en $Avion.modelo$
+	\item $TripuladoPor.id\_av$ debe estar en $Avion.id\_avion$
 \end{itemize}
 
 \vspace*{0.1cm}
 \noindent
-\textbf{Pais}(\underline{id\_pais}, nombre\_pais)
+\textbf{Pais}(\underline{id\_pais}, nombre)
 \begin{itemize}[noitemsep]
 	\item $FK = \emptyset$
 	\item $PK = CK = \{id\_pais\}$
@@ -259,7 +252,7 @@
 
 % \newpage
 \noindent
-\textbf{Ciudad}(\underline{id\_ciudad}, nombre\_ciudad, \dotuline{id\_pais})
+\textbf{Ciudad}(\underline{id\_ciudad}, nombre, \dotuline{id\_pais})
 \begin{itemize}[noitemsep]
 	\item $FK = \{id\_pais\}$
 	\item $PK = CK = \{id\_ciudad\}$
