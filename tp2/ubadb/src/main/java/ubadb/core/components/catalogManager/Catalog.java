@@ -40,7 +40,7 @@ public class Catalog
 		return t.getTableId().equals(tableId);
 	}
 	
-	public Integer getSizeOfPool(String name)
+	public Integer getSizeOfPool(String name) throws Exception 
 	{
 		for (PoolDescriptor p:poolDescriptors)
 		{
@@ -50,7 +50,7 @@ public class Catalog
 			}
 		}
 		
-		return null;
+		throw new Exception("Name does not exists");
 	}
 	
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)

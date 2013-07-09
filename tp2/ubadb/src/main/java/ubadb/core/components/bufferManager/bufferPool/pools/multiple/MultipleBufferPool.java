@@ -35,7 +35,19 @@ public class MultipleBufferPool implements BufferPool
 		
 		for (TableDescriptor t:tableDescriptors)
 		{			
-			SingleBufferPool buf = new SingleBufferPool(c.getSizeOfPool(t.getTableBuffer()));
+			
+			Integer size = null;
+			try
+			{
+				size = c.getSizeOfPool(t.getTableBuffer());
+			} 
+			catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			SingleBufferPool buf = new SingleBufferPool(size);
 			tableMap.put(t.getTableId(), buf);
 		}
 	}
