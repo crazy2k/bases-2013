@@ -17,10 +17,8 @@ public class CatalogManagerImplTest
 	
 	@Before
 	public void setUp()
-	{		
-		SampleCatalog f = new SampleCatalog();
-		
-		catalog = (f.getCatalog());		
+	{	
+		catalog = (new SampleCatalog().getCatalog());		 
 	}
 	
 	@Test

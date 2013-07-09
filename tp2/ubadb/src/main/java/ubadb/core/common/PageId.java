@@ -8,9 +8,19 @@ public class PageId
 	private int number;
 	private TableId tableId;
 	
+	public PageId(int number)
+	{
+		this.number = number;
+	}
+	
 	public PageId(int number, TableId tableId)
 	{
 		this.number = number;
+		this.tableId = tableId;
+	}
+	
+	public void setTableId(TableId tableId)
+	{
 		this.tableId = tableId;
 	}
 	

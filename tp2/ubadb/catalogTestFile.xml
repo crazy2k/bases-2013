@@ -2,15 +2,15 @@
   <poolDescriptors class="linked-list">
     <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
       <name>Default</name>
-      <size>500</size>
+      <size>5</size>
     </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
     <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
       <name>Keep</name>
-      <size>100</size>
+      <size>3</size>
     </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
     <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
       <name>Recycle</name>
-      <size>50</size>
+      <size>2</size>
     </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
   </poolDescriptors>
   <tableDescriptors class="linked-list">

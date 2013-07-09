@@ -15,16 +15,16 @@ public class SampleCatalog
 	private TableDescriptor td0 = new TableDescriptor(new TableId("0"), "Table0", "./Table0", "Default");
 	private TableDescriptor td1 = new TableDescriptor(new TableId("1"), "Table1", "./Table1", "Default");
 	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "./Table2", "Keep");
-	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "./Table3", "Recycle");
+	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "./Table3", "Keep");
 	private TableDescriptor td4 = new TableDescriptor(new TableId("4"), "Table4", "./Table4", "Keep");
 	private TableDescriptor td5 = new TableDescriptor(new TableId("5"), "Table5", "./Table5", "Keep");
 	
 	private List<TableDescriptor> tableDescriptors = new LinkedList<TableDescriptor>();
 	private List<PoolDescriptor> poolDescriptors = new LinkedList<PoolDescriptor>();
 	
-	private Integer DEFAULT_SIZE = 500;
-	private Integer KEEP_SIZE = 100;
-	private Integer RECYCLE_SIZE = 50;
+	private Integer DEFAULT_SIZE = 1;
+	private Integer KEEP_SIZE = 2;
+	private Integer RECYCLE_SIZE = 2;
 	
 	private void FakeCatalogInit()
 	{
@@ -50,15 +50,5 @@ public class SampleCatalog
 	{		
 		this.FakeCatalogInit();
 		return this.catalog;
-	}
-	
-	public List<TableDescriptor> getTableDescriptors()
-	{
-		return this.tableDescriptors;
-	}
-	
-	public List<PoolDescriptor> getPoolDescriptors()
-	{
-		return this.poolDescriptors;
 	}
 }

@@ -34,8 +34,7 @@ public class MultipleBufferPool implements BufferPool
 		List<TableDescriptor> tableDescriptors = c.getTableDescriptors();
 		
 		for (TableDescriptor t:tableDescriptors)
-		{			
-			
+		{	
 			Integer size = null;
 			try
 			{
@@ -77,7 +76,8 @@ public class MultipleBufferPool implements BufferPool
 
 	public BufferFrame addNewPage(Page page) throws BufferPoolException
 	{
-		return getPoolBufferFor(page.getPageId().getTableId()).addNewPage(page);
+		TableId tId = page.getPageId().getTableId();
+		return getPoolBufferFor(tId).addNewPage(page);
 	}
 
 	public void removePage(PageId pageId) throws BufferPoolException

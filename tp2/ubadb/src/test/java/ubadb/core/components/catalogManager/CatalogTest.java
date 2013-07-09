@@ -18,11 +18,9 @@ public class CatalogTest
 	
 	@Before
 	public void setUp()
-	{		
-		SampleCatalog f = new SampleCatalog();
-		
-		catalog = (f.getCatalog());
-		this.tableDescriptors = f.getTableDescriptors(); 
+	{	
+		catalog = (new SampleCatalog().getCatalog());
+		this.tableDescriptors = catalog.getTableDescriptors(); 
 	}
 	
 	@Test
