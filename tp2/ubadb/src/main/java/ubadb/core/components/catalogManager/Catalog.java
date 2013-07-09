@@ -3,6 +3,7 @@ package ubadb.core.components.catalogManager;
 import java.util.List;
 
 import ubadb.core.common.TableId;
+import ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor;
 
 /**
  * Serializable class that represents the catalog
@@ -10,17 +11,18 @@ import ubadb.core.common.TableId;
  */
 public class Catalog
 {
-	private List<TableDescriptor> tableDescriptors;
-//	private Integer keepBufferSize;
-//	private Integer recycleBufferSize;
+	/*private Map<String, SingleBufferPool> bufferPools;*/
+	private List<PoolDescriptor> poolDescriptors;
+	private List<TableDescriptor> tableDescriptors;	
 
 	public Catalog()
 	{		
 	}
 	
-	public Catalog(List<TableDescriptor> tableDescriptors)
+	public Catalog(List<TableDescriptor> tableDescriptors, List<PoolDescriptor> poolDescriptors)
 	{
 		this.tableDescriptors = tableDescriptors;
+		this.poolDescriptors = poolDescriptors;
 	}
 	
 	public List<TableDescriptor> getTableDescriptors()
@@ -28,9 +30,27 @@ public class Catalog
 		return tableDescriptors;
 	}
 	
+	public List<PoolDescriptor> getPoolDescriptors() 
+	{
+		return poolDescriptors;
+	}	
+	
 	private boolean idMatch(TableDescriptor t, TableId tableId)
 	{
 		return t.getTableId().equals(tableId);
+	}
+	
+	public Integer getSizeOfPool(String name)
+	{
+		for (PoolDescriptor p:poolDescriptors)
+		{
+			if (p.getName() == name)
+			{
+				return p.getSize();
+			}
+		}
+		
+		return null;
 	}
 	
 	public TableDescriptor getTableDescriptorByTableId(TableId tableId)

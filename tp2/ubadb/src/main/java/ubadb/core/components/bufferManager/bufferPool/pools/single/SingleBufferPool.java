@@ -9,7 +9,7 @@ import ubadb.core.components.bufferManager.bufferPool.BufferFrame;
 import ubadb.core.components.bufferManager.bufferPool.BufferPool;
 import ubadb.core.components.bufferManager.bufferPool.BufferPoolException;
 import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.PageReplacementStrategy;
-import ubadb.core.components.catalogManager.TableDescriptor;
+import ubadb.core.components.bufferManager.bufferPool.replacementStrategies.fifo.FIFOReplacementStrategy;
 
 /**
  * A single buffer pool shared by all tables 
@@ -20,6 +20,13 @@ public class SingleBufferPool implements BufferPool
 	private Map<PageId, BufferFrame> framesMap;
 	private PageReplacementStrategy pageReplacementStrategy;
 	private final int maxBufferPoolSize;
+	
+	public SingleBufferPool(int maxBufferPoolSize)
+	{
+		this.maxBufferPoolSize = maxBufferPoolSize;
+		this.pageReplacementStrategy = new FIFOReplacementStrategy();
+		this.framesMap = new HashMap<PageId, BufferFrame>(maxBufferPoolSize);
+	}
 	
 	public SingleBufferPool(int maxBufferPoolSize, PageReplacementStrategy pageReplacementStrategy)
 	{

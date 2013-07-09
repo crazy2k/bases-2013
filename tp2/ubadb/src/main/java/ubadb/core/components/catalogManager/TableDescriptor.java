@@ -10,15 +10,12 @@ public class TableDescriptor
 {
 	private TableId tableId;
 	private String tableName;
-	private String tablePath;
-	//private SingleBufferPool tableBuffer; /* Ver si conviene poner un id en vez de esto */
+	private String tablePath;	
 	private String tableBuffer;
 
 	public TableDescriptor()
 	{		
-	}
-	
-	
+	}	
 	
 	public TableDescriptor(TableId tableId, String tableName, String tablePath, String tableBuffer)
 	{

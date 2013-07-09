@@ -34,8 +34,9 @@ public class MultipleBufferPool implements BufferPool
 		List<TableDescriptor> tableDescriptors = c.getTableDescriptors();
 		
 		for (TableDescriptor t:tableDescriptors)
-		{
-			tableMap.put(t.getTableId(), t.getTableBuffer());
+		{			
+			SingleBufferPool buf = new SingleBufferPool(c.getSizeOfPool(t.getTableBuffer()));
+			tableMap.put(t.getTableId(), buf);
 		}
 	}
 
