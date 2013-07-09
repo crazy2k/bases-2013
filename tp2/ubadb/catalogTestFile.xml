@@ -16,6 +16,14 @@
   <tableDescriptors class="linked-list">
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
+        <internalName>0</internalName>
+      </tableId>
+      <tableName>Table0</tableName>
+      <tablePath>./Table0</tablePath>
+      <tableBuffer>Default</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
         <internalName>1</internalName>
       </tableId>
       <tableName>Table1</tableName>
@@ -28,7 +36,7 @@
       </tableId>
       <tableName>Table2</tableName>
       <tablePath>./Table2</tablePath>
-      <tableBuffer>Default</tableBuffer>
+      <tableBuffer>Keep</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
@@ -36,7 +44,23 @@
       </tableId>
       <tableName>Table3</tableName>
       <tablePath>./Table3</tablePath>
-      <tableBuffer>Default</tableBuffer>
+      <tableBuffer>Recycle</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>4</internalName>
+      </tableId>
+      <tableName>Table4</tableName>
+      <tablePath>./Table4</tablePath>
+      <tableBuffer>Keep</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>5</internalName>
+      </tableId>
+      <tableName>Table5</tableName>
+      <tablePath>./Table5</tablePath>
+      <tableBuffer>Keep</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
   </tableDescriptors>
 </ubadb.core.components.catalogManager.Catalog>
