@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.CORBA.portable.Streamable;
 
 import ubadb.core.common.Page;
 import ubadb.core.common.PageId;
@@ -75,22 +76,21 @@ public class MultipleBufferPoolTest
 	@Test
 	public void testHasSpaceTrue() throws Exception
 	{
-		bufferPool.addNewPage(pages.get(0));
-		assertTrue(bufferPool.hasSpace(pages.get(1).getPageId()));
+		bufferPool.addNewPage(pages.get(3));
+		assertTrue(bufferPool.hasSpace(pages.get(4).getPageId()));
 	}
 	
-//	@Test
-//	public void testHasSpaceFalse() throws Exception
-//	{
-//		/* Keep */
-//		bufferPool.addNewPage(pages.get(2));
-//		bufferPool.addNewPage(pages.get(3));
-//		bufferPool.addNewPage(pages.get(4));
-//		
-//		//no funciona esto
-//		//assertFalse(bufferPool.hasSpace(pages.get(5).getPageId()));
-//	}
+	@Test
+	public void testHasSpaceFalse() throws Exception
+	{
+		/* Keep */
+		bufferPool.addNewPage(pages.get(3));
+		bufferPool.addNewPage(pages.get(4));
+		
+		assertFalse(bufferPool.hasSpace(pages.get(5).getPageId()));
+	}
 	
+	/*
 	@Test
 	public void testAddNewPageWithSpace() throws Exception
 	{
@@ -99,15 +99,16 @@ public class MultipleBufferPoolTest
 		
 		assertEquals(2, bufferPool.countPagesInPool());
 	}
+	*/
 	
-//	@Test(expected=BufferPoolException.class)
-//	public void testAddNewPageWithoutSpace() throws Exception
-//	{
-//		bufferPool.addNewPage(pages.get(2));
-//		bufferPool.addNewPage(pages.get(3));
-//		bufferPool.addNewPage(pages.get(4));
-//		bufferPool.addNewPage(pages.get(5));
-//	}
+	@Test(expected=BufferPoolException.class)
+	public void testAddNewPageWithoutSpace() throws Exception
+	{
+		bufferPool.addNewPage(pages.get(2));
+		bufferPool.addNewPage(pages.get(3));
+		bufferPool.addNewPage(pages.get(4));
+		bufferPool.addNewPage(pages.get(5));
+	}
 	
 	@Test(expected=BufferPoolException.class)
 	public void testAddNewPageWithExisting() throws Exception
@@ -129,22 +130,22 @@ public class MultipleBufferPoolTest
 	public void testRemoveExistingPage() throws Exception
 	{
 		bufferPool.addNewPage(pages.get(0));
-		bufferPool.addNewPage(pages.get(1));
 		bufferPool.addNewPage(pages.get(2));
+		bufferPool.addNewPage(pages.get(3));
 		
 		bufferPool.removePage(pages.get(0).getPageId());
 		
-		assertEquals(2, bufferPool.countPagesInPool());
+		assertFalse(bufferPool.isPageInPool(pages.get(0).getPageId()));
 	}
 	
 	@Test(expected=BufferPoolException.class)
 	public void testRemoveUnexistingPage() throws Exception
 	{
 		bufferPool.addNewPage(pages.get(0));
-		bufferPool.addNewPage(pages.get(1));
 		bufferPool.addNewPage(pages.get(2));
+		bufferPool.addNewPage(pages.get(3));
 		
-		bufferPool.removePage(pages.get(3).getPageId());
+		bufferPool.removePage(pages.get(4).getPageId());
 	}
 	
 	@Test
@@ -157,10 +158,13 @@ public class MultipleBufferPoolTest
 	public void countPagesNonEmptyPool() throws Exception
 	{
 		bufferPool.addNewPage(pages.get(0));
-		bufferPool.addNewPage(pages.get(1));
+		//System.out.println(String.format("%d\n", bufferPool.countPagesInPool()));
 		bufferPool.addNewPage(pages.get(2));
+		//System.out.println(String.format("%d\n", bufferPool.countPagesInPool()));
+		bufferPool.addNewPage(pages.get(3));
 		
 		assertEquals(3, bufferPool.countPagesInPool());
+		//System.out.println(String.format("%d ", bufferPool.countPagesInPool()));
 	}
 	
 }

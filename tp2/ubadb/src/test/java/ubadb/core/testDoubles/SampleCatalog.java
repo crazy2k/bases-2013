@@ -14,7 +14,7 @@ public class SampleCatalog
 	
 	private TableDescriptor td0 = new TableDescriptor(new TableId("0"), "Table0", "./Table0", "Default");
 	private TableDescriptor td1 = new TableDescriptor(new TableId("1"), "Table1", "./Table1", "Default");
-	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "./Table2", "Keep");
+	private TableDescriptor td2 = new TableDescriptor(new TableId("2"), "Table2", "./Table2", "Recycle");
 	private TableDescriptor td3 = new TableDescriptor(new TableId("3"), "Table3", "./Table3", "Keep");
 	private TableDescriptor td4 = new TableDescriptor(new TableId("4"), "Table4", "./Table4", "Keep");
 	private TableDescriptor td5 = new TableDescriptor(new TableId("5"), "Table5", "./Table5", "Keep");
