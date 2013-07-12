@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.CORBA.portable.Streamable;
 
 import ubadb.core.common.Page;
 import ubadb.core.common.PageId;
@@ -37,8 +36,7 @@ public class MultipleBufferPoolTest
 		List<TableDescriptor> tableDescriptors = catalog.getTableDescriptors();
 		
 		for (int i = 0; i < 6; i++)
-		{
-			 //% tableDescriptors.size()
+		{			 
 			PageId pageId = new PageId(i, tableDescriptors.get(i).getTableId());
 			pages.add(new Page(pageId, "abd".getBytes()));
 		}
@@ -89,8 +87,7 @@ public class MultipleBufferPoolTest
 		
 		assertFalse(bufferPool.hasSpace(pages.get(5).getPageId()));
 	}
-	
-	/*
+		
 	@Test
 	public void testAddNewPageWithSpace() throws Exception
 	{
@@ -98,8 +95,7 @@ public class MultipleBufferPoolTest
 		bufferPool.addNewPage(pages.get(3));
 		
 		assertEquals(2, bufferPool.countPagesInPool());
-	}
-	*/
+	}	
 	
 	@Test(expected=BufferPoolException.class)
 	public void testAddNewPageWithoutSpace() throws Exception
@@ -158,13 +154,10 @@ public class MultipleBufferPoolTest
 	public void countPagesNonEmptyPool() throws Exception
 	{
 		bufferPool.addNewPage(pages.get(0));
-		//System.out.println(String.format("%d\n", bufferPool.countPagesInPool()));
 		bufferPool.addNewPage(pages.get(2));
-		//System.out.println(String.format("%d\n", bufferPool.countPagesInPool()));
 		bufferPool.addNewPage(pages.get(3));
 		
-		assertEquals(3, bufferPool.countPagesInPool());
-		//System.out.println(String.format("%d ", bufferPool.countPagesInPool()));
+		assertEquals(3, bufferPool.countPagesInPool());		
 	}
 	
 }

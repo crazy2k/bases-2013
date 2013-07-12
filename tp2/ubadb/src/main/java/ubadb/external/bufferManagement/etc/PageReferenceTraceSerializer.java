@@ -46,7 +46,7 @@ public class PageReferenceTraceSerializer
 		Path path = Paths.get(fileName);
 		try
 		{
-			BufferedReader reader = Files.newBufferedReader(path,Charset.forName(CHARSET));
+			BufferedReader reader = Files.newBufferedReader(path, Charset.forName(CHARSET));
 			
 		    String line = reader.readLine();
 		    while (line != null)

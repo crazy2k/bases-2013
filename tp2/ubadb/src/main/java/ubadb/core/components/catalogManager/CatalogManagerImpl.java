@@ -29,8 +29,6 @@ public class CatalogManagerImpl implements CatalogManager
 		
 		try 
 		{
-			/*private Map<String, SingleBufferPool> bufferPools;
-			private List<TableDescriptor> tableDescriptors;*/
 			catalog = (Catalog) xstream.fromXML(new FileInputStream(filename));
 		} 
 		catch (FileNotFoundException e) 
