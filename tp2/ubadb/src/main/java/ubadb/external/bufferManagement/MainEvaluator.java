@@ -25,7 +25,25 @@ public class MainEvaluator
 		try
 		{
 			PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
-			String traceFileName = "generated/a.trace";
+
+			/* BNLJ */
+			//String traceFileName = "generated/BNLJ-ProductXSale-group_50.trace";
+			//String traceFileName = "generated/BNLJ-ProductXSale-group_75.trace";
+			//String traceFileName = "generated/BNLJ-ProductXSale-group_100.trace"; // da memory full
+			//String traceFileName = "generated/BNLJ-SaleXProduct-group_100.trace"; // da memory full
+			//String traceFileName = "generated/BNLJ-SaleXProduct-group_250.trace"; // da memory full
+			
+			/* File Scan. */			
+			String traceFileName = "generated/fileScan-Company.trace";
+			//String traceFileName = "generated/fileScan-Product.trace";
+			//String traceFileName = "generated/fileScan-Sale.trace";
+			
+			/* Index Scan. */
+			//String traceFileName = "generated/indexScanClustered-Product.trace";
+			//String traceFileName = "generated/indexScanClustered-Sale.trace";
+			//String traceFileName = "generated/indexScanUnclustered-Product.trace";
+			//String traceFileName = "generated/indexScanUnclustered-Sale.trace";
+			
 			int bufferPoolSize = 100;
 			
 			evaluate(pageReplacementStrategy, traceFileName, bufferPoolSize);
