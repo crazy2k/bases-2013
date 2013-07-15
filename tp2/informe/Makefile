@@ -1,10 +1,8 @@
-DEPS = intro.tex conclusiones.tex decisiones.tex implementacion.tex
-
 all: informe.pdf clean-logs
 
 new: clean all
 
-informe.pdf: informe.tex $(DEPS)
+informe.pdf: informe.tex
 	pdflatex informe.tex
 	pdflatex informe.tex	
 	clear
