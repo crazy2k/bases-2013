@@ -5,26 +5,28 @@ múltiples buffer y su finalidad.}
 
 \vspace*{0.5cm}
 
-Oracle en su documentaci\'on no revela los detalles de su funcionamiento 
-interno. 
-Sin embargo existen ciertas publicaciones al respecto por parte de 
-personas que trabajaron en esos proyectos, y tambi\'en por parte de 
-quienes analizaron el c\'odigo fuente.
+% Oracle en su documentaci\'on no revela los detalles de su funcionamiento 
+% interno.
+% Sin embargo existen ciertas publicaciones al respecto por parte de 
+% personas que trabajaron en esos proyectos, y tambi\'en por parte de 
+% quienes analizaron el c\'odigo fuente.
 Basamos nuestro análisis en la bibliografía mencionada en la 
 sección correspondiente.
 
 \vspace*{0.5cm}
 
-Puede pasar que bloques de distinta naturaleza interfieran entre sí, por lo 
-cual en Oracle, se decidió utilizar \textit{m\'ultiples buffers}. Además 
-estos múltiples buffers en general se adecuan a la mayoría de los sistemas.
+Puede pasar que diferentes bloques interfieran entre sí, por lo cual 
+en Oracle, se decidió utilizar \textit{m\'ultiples buffers}. 
+Estos múltiples buffers en general se adecuan a la mayoría de los sistemas.
 Oracle implementa \textit{m\'ultiples buffers} utilizando una división de 
-buffers basado en patrones de acceso atipico. Esta categorización queda en
-tres pools fijos:
+buffers basada en patrones de acceso atipico 
+\footnote{\href{http://www.exploreoracle.com/2009/04/02/keep-buffer-pool-and-recycle-buffer-pool}{http://www.exploreoracle.com/2009/04/02/keep-buffer-pool-and-recycle-buffer-pool}}.
+El tamaño de cada pool es configurable, pero los pool en sí son fijos, y
+son los siguientes:
 
 \begin{itemize}
   \item \textbf{Keep pool}
-    Utilizado para objetos pequeños que siempre deber\'ian estar en memoria, 
+    Utilizado para objetos que siempre deber\'ian estar en memoria, 
     ya que son muy frecuentemente usados.
 
   \item \textbf{Recycle pool}
@@ -35,23 +37,3 @@ tres pools fijos:
   \item \textbf{Default pool} 
     Utilizado para todo lo dem\'as.
 \end{itemize}
-
-% A single default buffer pool is generally adequate for most systems. However, users with detailed knowledge of an application's buffer pool might benefit from configuring multiple buffer pools.
-
-% With segments that have atypical access patterns, store blocks from those segments in two different buffer pools: the KEEP pool and the RECYCLE pool. A segment's access pattern may be atypical if it is constantly accessed (that is, hot) or infrequently accessed (for example, a large segment accessed by a batch job only once a day).
-
-% Multiple buffer pools let you address these differences. You can use a KEEP buffer pool to maintain frequently accessed segments in the buffer cache, and a RECYCLE buffer pool to prevent objects from consuming unnecessary space in the cache. When an object is associated with a cache, all blocks from that object are placed in that cache. Oracle Database maintains a DEFAULT buffer pool for objects that have not been assigned to a specific buffer pool. The default buffer pool is of size DB_CACHE_SIZE. Each buffer pool uses the same Least Recently Used (LRU) replacement policy (for example, if the KEEP pool is not large enough to store all of the segments allocated to it, then the oldest blocks age out of the cache).
-
-% By allocating objects to appropriate buffer pools, you can:
-
-% Reduce or eliminate I/Os
-
-% Isolate or limit an object to a separate cache
-
-
-% To define a default buffer pool for an object, use the BUFFER_POOL keyword of the STORAGE clause. This clause is valid for CREATE and ALTER TABLE, CLUSTER, and INDEX SQL statements. After a buffer pool has been specified, all subsequent blocks read for the object are placed in that pool.
-
-% If a buffer pool is defined for a partitioned table or index, then each partition of the object inherits the buffer pool from the table or index definition, unless you override it with a specific buffer pool.
-
-% When the buffer pool of an object is changed using the ALTER statement, all buffers currently containing blocks of the altered segment remain in the buffer pool they were in before the ALTER statement. Newly loaded blocks and any blocks that have aged out and are reloaded go into the new buffer pool.
-
