@@ -1,0 +1,71 @@
+\section{Detalles de Implementaci\'on - Ejercicio 2}
+
+Las funciones de este ejercicio tenían que ver con el catálogo.
+Tanto para \texttt{Catalog} como para \texttt{CatalogManagerImpl}
+se realizaron tests de unidad, estos se encuentran en 
+\texttt{tests/components/catalogManager}.
+
+% \vspace*{0.5cm}
+
+\section{getTableDescriptorByTableId}
+
+En esta parte, teníamos que implementar una función que dado un
+\texttt{tableId}, devolviera el \texttt{tableDescriptor} correspondiente.
+
+
+Para esto, simplemente recorrimos la lista \texttt{tableDescriptors}
+del catálogo, fijándonos elemento a elemento si el id era el buscado,
+usando la función \texttt{idMatch}, que compara un \texttt{tableDescriptor}
+con un \texttt{tableId} y devuelve si hay un match por Id.
+
+\begin{verbatimtab}[4]
+public TableDescriptor getTableDescriptorByTableId(TableId tableId)
+{		
+	/* Recorrer la lista y obtener el que buscamos. */
+	
+	TableDescriptor result = null;		
+	
+	for (TableDescriptor t : tableDescriptors)
+	{
+		if (idMatch(t, tableId))
+		{
+			result = t;
+			break;
+		}
+	}
+	
+	return result;
+}
+
+private boolean idMatch(TableDescriptor t, TableId tableId)
+{
+	return t.getTableId().equals(tableId);
+}
+\end{verbatimtab}
+
+\newpage
+\section{loadCatalog}
+
+En esta parte, teníamos que incorporar la posibilidad de levantar desde un archivo
+XML el catálogo de la base de datos.
+
+Para esto, utilizamos la función \texttt{fromXML} de \texttt{XStream}, que lee
+un archivo XML y lo parsea, devolviendo un objeto.
+Este objeto lo casteamos a un catálogo que es lo que necesitamos.
+
+\begin{verbatimtab}[4]
+public void loadCatalog() throws CatalogManagerException
+{
+	XStream xstream = new XStream();			
+	String filename = filePathPrefix + catalogFilePath;
+	
+	try 
+	{
+		catalog = (Catalog) xstream.fromXML(new FileInputStream(filename));
+	} 
+	catch (FileNotFoundException e) 
+	{
+		e.printStackTrace();
+	}		
+}
+\end{verbatimtab}
