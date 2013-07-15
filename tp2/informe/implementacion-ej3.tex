@@ -1,12 +1,12 @@
 \section{Detalles de Implementaci\'on - Ejercicio 3}
 
+\noindent
 La implementación de este ejercicio abarca varias clases, 
-% el fin
-% es lograr tener un buffer manager que use múltiples pools.
 se muestran a continuación las clases que agregamos y modificamos.
 
 \vspace*{0.2cm}
 
+\noindent
 La implementación final del buffer con múltiples pools está realizada 
 en la clase \newline
 \texttt{MultipleBufferPool}, ubicada en
@@ -18,14 +18,17 @@ en la clase \newline
 El test de unidad se encuentra en 
 \texttt{\small tests/components/bufferManager/bufferPool/pools/multiple}.
 
+% -----------------------------------------------------------------------------
 
 \subsection{TableDescriptor}
 
+\noindent
 Agregamos un campo tableBuffer, que es un String representando
 el nombre del bufferPool al cual la tabla está asociada.
 
 \vspace*{0.3cm}
 
+\noindent
 Al construirse un nuevo \texttt{TableDescriptor}, si no se
 provee dicho valor de tableBuffer, se toma como ``Default''
 
@@ -51,6 +54,7 @@ public class TableDescriptor
 
 \subsection{PoolDescriptor}
 
+\noindent
 Teniendo en cuenta la idea de la clase \texttt{TableDescriptor},
 creamos la clase \texttt{PoolDescriptor}, que almacena el 
 nombre y el tamaño de un pool.
@@ -72,6 +76,7 @@ public class PoolDescriptor
 
 \subsection{Catalog}
 
+\noindent
 Agregamos una lista de \texttt{PoolDescriptor} a la ya existente lista 
 de \texttt{TableDescriptor}.
 Agregamos un método que, dado el nombre de un Pool devuelve su tamaño, 
@@ -79,6 +84,7 @@ buscándolo en la lista \texttt{poolDesciptors}.
 
 \vspace*{0.5cm}
 
+\noindent
 Tener la lista \texttt{poolDescriptors} permite que se puedan tener
 todos los buffers que se desee, diciendo para cada uno el nombre y 
 el tamaño. Esto hace que la implementación sea configurable y
@@ -112,7 +118,22 @@ public class Catalog
 
 \subsection{MultipleBufferPool}
 
-Para implementar múltiples buffers, tenemos un 
+\noindent
+Para implementar múltiples buffers, tenemos un mapeo entre \texttt{TableId}
+y \texttt{SingleBufferPool}.
+
+\vspace*{0.5cm}
+
+\noindent
+Creamos un constructor de \texttt{MultipleBufferPool} que toma un 
+\texttt{Catalog}, y primero construye un \texttt{SingleBufferPool}
+por cada elemento en la lista \texttt{poolDescriptors}, usando la
+información de nombre y tamaño.
+Luego se recorre la lista \texttt{tableDescriptors} para generar
+las asociaciones entre cada \texttt{TableId}
+y \texttt{SingleBufferPool}.
+
+\newpage
 
 \begin{verbatimtab}[4]
 public class MultipleBufferPool implements BufferPool
@@ -139,5 +160,39 @@ public class MultipleBufferPool implements BufferPool
 			tableMap.put(t.getTableId(), bufferPools.get(t.getTableBuffer()));
 		}
 	}
+}
+\end{verbatimtab}
+
+\noindent
+Cada vez que le llega un pedido a una instancia de \texttt{MultipleBufferPool}, 
+se fija en este mapeo cuál es el \texttt{SingleBufferPool} a la tabla
+o página en cuestión. Una vez localizado, se le delega a este la funcionalidad
+requeridad. 
+
+\vspace*{0.5cm}
+
+\noindent
+Por ejemplo, para la función \texttt{addNewPage} se realiza lo siguiente
+
+\begin{verbatimtab}[4]
+public BufferFrame addNewPage(Page page) throws BufferPoolException
+{
+	TableId tId = page.getPageId().getTableId();
+	return getPoolBufferFor(tId).addNewPage(page);
+}
+\end{verbatimtab}
+
+\newpage
+
+\begin{verbatimtab}[4]
+private SingleBufferPool getPoolBufferFor(TableId tableId) 
+						 throws BufferPoolException 
+{
+	SingleBufferPool result = tableMap.get(tableId);
+		
+	if (result != null)
+		return result;
+	
+	throw new BufferPoolException("The table is not being managed by the pool");
 }
 \end{verbatimtab}
