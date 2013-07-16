@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 15, 2013 at 08:01 PM
+-- Generation Time: Jul 16, 2013 at 05:50 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.6-1ubuntu1.2
 
@@ -27,14 +27,26 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `Aeropuerto` (
-  `id_a` int(11) NOT NULL,
+  `id_a` int(11) NOT NULL AUTO_INCREMENT,
   `tasa` float NOT NULL,
   `transporte` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `id_ciudad` int(11) NOT NULL,
   PRIMARY KEY (`id_a`),
   KEY `FK_Aeropuerto` (`id_ciudad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `Aeropuerto`
+--
+
+INSERT INTO `Aeropuerto` (`id_a`, `tasa`, `transporte`, `nombre`, `id_ciudad`) VALUES
+(1, 21, 'colectivos', 'aeroparque jorge newbery', 1),
+(2, 10, 'colectivos', 'aeropuerto de cordoba', 2),
+(3, 20, 'colectivos', 'aeropuerto de rosario', 3),
+(4, 20, 'colectivos', 'aeropuerto de mendoza', 4),
+(5, 10, 'colectivos', 'aeropuerto de rio de janeiro', 5),
+(6, 10, 'colectivos', 'aeropuerto de san pablo', 6);
 
 -- --------------------------------------------------------
 
@@ -56,14 +68,25 @@ CREATE TABLE IF NOT EXISTS `Atiende` (
 --
 
 CREATE TABLE IF NOT EXISTS `Avion` (
-  `id_avion` int(11) NOT NULL,
+  `id_avion` int(11) NOT NULL AUTO_INCREMENT,
   `modelo` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `anio_fabricacion` int(11) NOT NULL,
   `millas` int(11) NOT NULL,
   `asiestos` int(11) NOT NULL,
   `origen` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_avion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `Avion`
+--
+
+INSERT INTO `Avion` (`id_avion`, `modelo`, `anio_fabricacion`, `millas`, `asiestos`, `origen`) VALUES
+(1, 'boeing 737', 2005, 1000, 80, 'usa'),
+(2, 'airbus a320', 2004, 2000, 70, 'francia'),
+(3, 'airbus a380', 2010, 1000, 80, 'francia'),
+(4, 'boeing 767', 2003, 20000, 100, 'usa'),
+(5, 'embraer 190', 2010, 1000, 70, 'brasil');
 
 -- --------------------------------------------------------
 
@@ -86,12 +109,24 @@ CREATE TABLE IF NOT EXISTS `Brinda` (
 --
 
 CREATE TABLE IF NOT EXISTS `Ciudad` (
-  `id_ciudad` int(11) NOT NULL,
+  `id_ciudad` int(11) NOT NULL AUTO_INCREMENT,
   `id_pais` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_ciudad`),
   KEY `FK_Ciudad` (`id_pais`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `Ciudad`
+--
+
+INSERT INTO `Ciudad` (`id_ciudad`, `id_pais`, `nombre`) VALUES
+(1, 1, 'buenos aires'),
+(2, 1, 'cordoba'),
+(3, 1, 'rosario'),
+(4, 1, 'mendoza'),
+(5, 2, 'rio de janeiro'),
+(6, 2, 'san pablo');
 
 -- --------------------------------------------------------
 
@@ -100,10 +135,18 @@ CREATE TABLE IF NOT EXISTS `Ciudad` (
 --
 
 CREATE TABLE IF NOT EXISTS `Clase` (
-  `id_clase` int(11) NOT NULL,
+  `id_clase` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_clase`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `Clase`
+--
+
+INSERT INTO `Clase` (`id_clase`, `descripcion`) VALUES
+(1, 'economica'),
+(2, 'business');
 
 -- --------------------------------------------------------
 
@@ -120,6 +163,14 @@ CREATE TABLE IF NOT EXISTS `DatosPersonales` (
   `nacimiento` datetime NOT NULL,
   PRIMARY KEY (`id_user`,`nombre`,`apellido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `DatosPersonales`
+--
+
+INSERT INTO `DatosPersonales` (`id_user`, `nombre`, `apellido`, `email`, `profesion`, `nacimiento`) VALUES
+(1, 'Pablo', 'Antonio', 'pabloa@pabloa.com', 'estudiante', '2013-07-10 00:00:00'),
+(2, 'Vanesa', 'Stricker', 'vane@vane.com', 'camarera', '2013-07-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -200,10 +251,18 @@ CREATE TABLE IF NOT EXISTS `Esta` (
 --
 
 CREATE TABLE IF NOT EXISTS `Estado` (
-  `id_estado` int(11) NOT NULL,
+  `id_estado` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_estado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `Estado`
+--
+
+INSERT INTO `Estado` (`id_estado`, `descripcion`) VALUES
+(1, 'activa'),
+(2, 'caducada');
 
 -- --------------------------------------------------------
 
@@ -232,6 +291,14 @@ CREATE TABLE IF NOT EXISTS `Hace` (
   KEY `FK_Hace_User` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Dumping data for table `Hace`
+--
+
+INSERT INTO `Hace` (`id_reserva`, `id_user`) VALUES
+(7, 1),
+(8, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -239,10 +306,18 @@ CREATE TABLE IF NOT EXISTS `Hace` (
 --
 
 CREATE TABLE IF NOT EXISTS `Pais` (
-  `id_pais` int(11) NOT NULL,
+  `id_pais` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_pais`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `Pais`
+--
+
+INSERT INTO `Pais` (`id_pais`, `nombre`) VALUES
+(1, 'argentina'),
+(2, 'brasil');
 
 -- --------------------------------------------------------
 
@@ -251,12 +326,28 @@ CREATE TABLE IF NOT EXISTS `Pais` (
 --
 
 CREATE TABLE IF NOT EXISTS `Reserva` (
-  `id_reserva` int(11) NOT NULL,
+  `id_reserva` int(11) NOT NULL AUTO_INCREMENT,
   `caducidad` datetime NOT NULL,
   `id_estado` int(11) NOT NULL,
   PRIMARY KEY (`id_reserva`),
   KEY `FK_Reserva` (`id_estado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `Reserva`
+--
+
+INSERT INTO `Reserva` (`id_reserva`, `caducidad`, `id_estado`) VALUES
+(7, '2013-07-01 00:00:00', 1),
+(8, '2013-07-02 00:00:00', 1),
+(9, '2013-07-01 00:00:00', 1),
+(10, '2013-07-01 00:00:00', 1),
+(11, '2013-07-01 00:00:00', 1),
+(12, '2013-07-01 00:00:00', 1),
+(13, '2013-07-01 00:00:00', 1),
+(14, '2013-07-01 00:00:00', 1),
+(15, '2013-07-01 00:00:00', 1),
+(16, '2013-07-01 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -278,7 +369,7 @@ CREATE TABLE IF NOT EXISTS `Responde` (
 --
 
 CREATE TABLE IF NOT EXISTS `Servicio` (
-  `id_servicio` int(11) NOT NULL,
+  `id_servicio` int(11) NOT NULL AUTO_INCREMENT,
   `salida` datetime NOT NULL,
   `llegada` datetime NOT NULL,
   `id_vuelo` int(11) NOT NULL,
@@ -286,7 +377,15 @@ CREATE TABLE IF NOT EXISTS `Servicio` (
   PRIMARY KEY (`id_servicio`),
   KEY `FK_Servicio_Vuelo` (`id_vuelo`),
   KEY `FK_Servicio_Avion` (`id_av`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `Servicio`
+--
+
+INSERT INTO `Servicio` (`id_servicio`, `salida`, `llegada`, `id_vuelo`, `id_av`) VALUES
+(1, '2013-07-01 00:00:00', '2013-07-02 00:00:00', 1, 1),
+(3, '2013-07-02 00:00:00', '2013-07-03 00:00:00', 4, 3);
 
 -- --------------------------------------------------------
 
@@ -313,6 +412,14 @@ CREATE TABLE IF NOT EXISTS `Tiene` (
   KEY `FK_Tiene_Serv` (`id_serv`),
   KEY `FK_Tiene_Clase` (`id_clase`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Dumping data for table `Tiene`
+--
+
+INSERT INTO `Tiene` (`id_res`, `id_serv`, `id_clase`) VALUES
+(7, 1, 1),
+(8, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -346,13 +453,23 @@ CREATE TABLE IF NOT EXISTS `Tripulante` (
 --
 
 CREATE TABLE IF NOT EXISTS `Usuario` (
-  `id_user` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `clave` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `nacionalidad` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_user`),
   KEY `FK_Usuario` (`nacionalidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `Usuario`
+--
+
+INSERT INTO `Usuario` (`id_user`, `username`, `clave`, `nacionalidad`) VALUES
+(1, 'pablo', 'pablo', 1),
+(2, 'vane', 'vane', 1),
+(3, 'nadia', 'nadia', 2),
+(4, 'agus', 'agus', 1);
 
 -- --------------------------------------------------------
 
@@ -375,13 +492,23 @@ CREATE TABLE IF NOT EXISTS `Vive` (
 --
 
 CREATE TABLE IF NOT EXISTS `Vuelo` (
-  `id_vuelo` int(11) NOT NULL,
+  `id_vuelo` int(11) NOT NULL AUTO_INCREMENT,
   `a_salida` int(11) NOT NULL,
   `a_llegada` int(11) NOT NULL,
   PRIMARY KEY (`id_vuelo`),
   KEY `FK_Vuelo_Salida` (`a_salida`),
   KEY `FK_Vuelo_Llega` (`a_llegada`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `Vuelo`
+--
+
+INSERT INTO `Vuelo` (`id_vuelo`, `a_salida`, `a_llegada`) VALUES
+(1, 1, 2),
+(2, 1, 3),
+(3, 1, 4),
+(4, 1, 5);
 
 --
 -- Constraints for dumped tables
