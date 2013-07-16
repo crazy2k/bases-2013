@@ -194,19 +194,19 @@ CREATE TABLE `linea-aerea`.`Factura`
 ) engine = InnoDB;
 
 
--- Depende de Avión y Teléfono
+-- Depende de Avión y Teléfono  CAMBIO AVION POR AEROPUERTO
 
 
 CREATE TABLE `linea-aerea`.`Responde`
 (
-    `id_av`     int                 not null, 
+    `id_a`     	int                 not null, 
     `nro_tel`   int                 not null, 
     
-    Constraint  PK_Responde         primary key (id_av, nro_tel),
+    Constraint  PK_Responde        primary key (id_a, nro_tel),
 
-    Constraint  FK_Responde_Avion   foreign key (id_av) 
-                                    references Avion(id_avion),
-    Constraint  FK_Responde_Tel     foreign key (nro_tel) 
+    Constraint  FK_Responde_Aer   	foreign key (id_a) 
+                                    references Aeropuerto(id_a),
+    Constraint  FK_Responde_Tel   	foreign key (nro_tel) 
                                     references Telefono(nro_tel)
 ) engine = InnoDB;
 
@@ -216,14 +216,14 @@ CREATE TABLE `linea-aerea`.`Responde`
 
 CREATE TABLE `linea-aerea`.`Esta`
 (
-    `id_av`     int                 not null, 
+    `id_a`     	int                 not null, 
     `calle`     varchar(255)        not null, 
     `nro`       int                 not null, 
 
     Constraint  PK_Esta             primary key (id_av, calle, nro),
 
-    Constraint  FK_Esta_Avion       foreign key (id_av)
-                                    references Avion(id_avion),
+    Constraint  FK_Esta_Aer        foreign key (id_a)
+                                     references Aeropuerto(id_a),
     Constraint  FK_Esta_Calle       foreign key (calle, nro) 
                                     references Direccion(calle, nro)
 ) engine = InnoDB;
