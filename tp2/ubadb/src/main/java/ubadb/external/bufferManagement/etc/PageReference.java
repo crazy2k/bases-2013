@@ -5,9 +5,9 @@ import ubadb.core.common.TransactionId;
 
 public class PageReference
 {
-	private TransactionId transactionId;
-	private PageId pageId;
-	private PageReferenceType type;
+	private TransactionId transactionId; // number 
+	private PageId pageId; // number, tableId
+	private PageReferenceType type; // request o release
 	
 	public PageReference(TransactionId transactionId, PageId pageId, PageReferenceType type)
 	{

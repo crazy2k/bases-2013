@@ -1,4 +1,4 @@
-package ubadb.external.bufferManagement.etc;
+  package ubadb.external.bufferManagement.etc;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,7 +18,7 @@ public class PageReferenceTraceSerializer
 	private static final String	COMMENT_IDENTIFIER	= "#";
 	private static final String	TRANSACTION_SEPARATOR = ":";
 	private static final String	TYPE_SEPARATOR	= " ";
-	private static final String	TABLE_SEPARATOR	= ",";
+	private static final String	TABLE_SEPARATOR	= ", ";
 	
 	public void write(PageReferenceTrace trace, String fileName) throws Exception
 	{

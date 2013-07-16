@@ -10,8 +10,7 @@ public class FileScanTraceGenerator extends PageReferenceTraceGenerator
 {
 	public PageReferenceTrace generateFileScan(long transactionNumber,String tableName, int pageCount)
 	{
-		List<PageId> pages = generateSequentialPages(tableName, 0, pageCount);
-		
+		List<PageId> pages = generateSequentialPages(tableName, 0, pageCount);		
 		return buildRequestAndRelease(new TransactionId(transactionNumber), pages);
 	}
 }
