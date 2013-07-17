@@ -35,6 +35,19 @@ public class Catalog
 		return poolDescriptors;
 	}	
 	
+	public String listPoolDescriptors()
+	{
+		String res = "";
+		
+		for (PoolDescriptor p : poolDescriptors)
+		{
+			res += p.getName();
+			res += " : " + p.getSize() + " ";
+		}
+		
+		return res;
+	}
+	
 	private boolean idMatch(TableDescriptor t, TableId tableId)
 	{
 		return t.getTableId().equals(tableId);
