@@ -19,10 +19,12 @@ public class TpEvaluator
 		PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
 		
 		runBNLJTraces(pageReplacementStrategy);
-		//runFileScanTraces(pageReplacementStrategy); // 0 como debe ser
-		//runIndexScanTraces(pageReplacementStrategy);
+		//runFileScanTraces(pageReplacementStrategy);
+		//runIndexScanTraces(pageReplacementStrategy);		
+		//runOurTraces(pageReplacementStrategy);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void runBNLJTraces(PageReplacementStrategy pageReplacementStrategy)
 	{
 		List<String> traceFileNames = new LinkedList<String>();
@@ -38,6 +40,7 @@ public class TpEvaluator
 		runTraces(pageReplacementStrategy, traceFileNames);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void runFileScanTraces(PageReplacementStrategy pageReplacementStrategy)
 	{
 		List<String> traceFileNames = new LinkedList<String>();
@@ -51,6 +54,7 @@ public class TpEvaluator
 		runTraces(pageReplacementStrategy, traceFileNames);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void runIndexScanTraces(PageReplacementStrategy pageReplacementStrategy)
 	{
 		List<String> traceFileNames = new LinkedList<String>();
@@ -62,6 +66,19 @@ public class TpEvaluator
 		traceFileNames.add("generated/indexScanUnclustered-Sale.trace");
 		
 		System.out.println("\nIndex Scan\n");		
+		runTraces(pageReplacementStrategy, traceFileNames);
+	}
+	
+	@SuppressWarnings("unused")
+	private static void runOurTraces(PageReplacementStrategy pageReplacementStrategy)
+	{
+		List<String> traceFileNames = new LinkedList<String>();
+		
+		/* Index Scan. */
+		traceFileNames.add("generated/random0.trace");
+		traceFileNames.add("generated/random1.trace");
+		
+		System.out.println("\nRandom Scan\n");		
 		runTraces(pageReplacementStrategy, traceFileNames);
 	}
 	
@@ -111,7 +128,7 @@ public class TpEvaluator
 			
 			Catalog catalog = catalogManager.catalog();
 			//System.out.print("BufferSizes " + catalog.listPoolDescriptors() + " ");
-			System.out.print(catalog.listPoolDescriptors() + " ");
+			//System.out.print(catalog.listPoolDescriptors() + " ");
 			MainEvaluator.evaluateMultiple(pageReplacementStrategy, traceFileName, catalogManager);
 		}
 	}
