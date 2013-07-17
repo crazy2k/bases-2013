@@ -43,15 +43,15 @@ y \texttt{MultipleBufferPool}
 \begin{verbatimtab}[4]
 public class TpEvaluator 
 {
+	static PageReplacementStrategy pageReplacementStrategy;
+	pageReplacementStrategy = new FIFOReplacementStrategy();
+
 	public static void main(String[] args)
 	{
-		PageReplacementStrategy pageReplacementStrategy;
-		pageReplacementStrategy = new FIFOReplacementStrategy();
-	
-		runBNLJTraces(pageReplacementStrategy);
-		runFileScanTraces(pageReplacementStrategy);
-		runIndexScanTraces(pageReplacementStrategy);		
-		runRandomTraces(pageReplacementStrategy);
+		runBNLJTraces();
+		runFileScanTraces();
+		runIndexScanTraces();		
+		runRandomTraces();
 	}
 
 	...
@@ -67,8 +67,7 @@ Por ejemplo, para el caso de \texttt{indexScan} se realiza lo siguiente
 \vspace*{-0.2cm}
 
 \begin{verbatimtab}[4]
-private static void runIndexScanTraces
-	(PageReplacementStrategy pageReplacementStrategy)
+private static void runIndexScanTraces()
 {
 	List<String> traceFileNames = new LinkedList<String>();
 	
@@ -79,24 +78,23 @@ private static void runIndexScanTraces
 	traceFileNames.add("generated/indexScanUnclustered-Sale.trace");
 	
 	System.out.println("\nIndex Scan\n");		
-	runTraces(pageReplacementStrategy, traceFileNames);
+	runTraces(traceFileNames);
 }
 \end{verbatimtab}
 
 \texttt{runTraces} toma una lista de nombres de trazas y para cada una llama
-a las funciones correspondientes dpara evaluarla usando Single y Multiple buffer pools.
+a las funciones correspondientes para evaluarla usando Single y Multiple buffer pools.
 
 \begin{verbatimtab}[4]
-private static void runTraces
-	(PageReplacementStrategy pageReplacementStrategy, List<String> traceFileNames)
+private static void runTraces(List<String> traceFileNames)
 {
 	for (String traceFileName: traceFileNames)
 	{
 		try
 		{				
 			System.out.println("\nTrace: " + traceFileName);
-			evaluateWithSingle(pageReplacementStrategy, traceFileName);
-			evaluateWithMultiple(pageReplacementStrategy, traceFileName);
+			evaluateWithSingle(traceFileName);
+			evaluateWithMultiple(traceFileName);
 		}
 		catch(Exception e)
 		{
@@ -120,11 +118,34 @@ con tamaños que van variando.
 
 \vspace*{0.5cm}
 
-Hicimos en cada caso que el tamaño de los 3 buffers fuera el mismo y
-que además se correspondiera con el del single. 
-Por ejemplo, si el tamaño utilizado para el single buffer pool era
-$15$, todos los buffers del multiple buffer pool también serán de 
-tamaño $15$.
+Tenemos cuatro grupos de catálogos, dentro de cada grupo hay 7 
+catálogos de diferentes tamaños.
+
+\begin{enumerate}
+	\item
+		\textbf{equal\_size}
+		todos los buffers tienen el mismo tamaño, que se corresponde
+		con el de single.
+		
+	\item
+		\textbf{bigger\_default}
+		\texttt{Keep} y \texttt{Recycle} tienen el mismo tamaño, 
+		que es el que se corresponde con el de single, y 
+		\texttt{Default} tiene el doble de tamaño.
+
+	\item
+		\textbf{bigger\_keep}
+		\texttt{Default} y \texttt{Recycle} tienen el mismo tamaño, 
+		que es el que se corresponde con el de single, y 
+		\texttt{Keep} tiene el doble de tamaño.
+
+	\item
+		\textbf{bigger\_recycle}
+		\texttt{Keep} y \texttt{Default} tienen el mismo tamaño, 
+		que es el que se corresponde con el de single, y 
+		\texttt{Recycle} tiene el doble de tamaño.
+\end{enumerate}
+
 Para la asignación en buffer, pusimos una tabla en cada uno de los
 buffers.
 
@@ -142,12 +163,11 @@ En el resto de los casos, usamos tanto los tamaños chicos como los
 grandes.
 
 \begin{verbatimtab}[4]
-private static void evaluateWithSingle
-	(PageReplacementStrategy pageReplacementStrategy, String traceFileName) 
+private static void evaluateWithSingle(String traceFileName) 
 	throws InterruptedException, BufferManagerException, Exception
 {
 	/* Para BNLJ. */ //int sizes[] = {252, 300, 500, 700}; 
-	int sizes[] = {15, 20, 60, 120, 252, 300, 500, 700};
+	int sizes[] = {10, 20, 60, 120, 252, 300, 500, 700};
 	System.out.println("\nSingleBufferPool\n");
 	
 	for (int size : sizes)
@@ -160,24 +180,43 @@ private static void evaluateWithSingle
 
 \newpage
 \begin{verbatimtab}[4]
-private static void evaluateWithMultiple
-	(PageReplacementStrategy pageReplacementStrategy, String traceFileName) 
+private static void evaluateWithMultiple(String traceFileName) 
 	throws InterruptedException, BufferManagerException, Exception
 {	
-	System.out.println("\nMultipleBufferPool\n");
+	System.out.println("\nMultipleBufferPool");
+		
+	System.out.println("\nequal_size\n");
+	String filename = "catalogs/equal_size/catalog_equal_size_";
+	evaluateWithMultipleUsingCatalog(traceFileName, filename);
+		
+	System.out.println("\nbigger_default\n");
+	filename = "catalogs/bigger_default/catalog_bigger_default_";
+	evaluateWithMultipleUsingCatalog(traceFileName, filename);
+		
+	System.out.println("\nbigger_keep\n");
+	filename = "catalogs/bigger_keep/catalog_bigger_keep_";
+	evaluateWithMultipleUsingCatalog(traceFileName, filename);
+		
+	System.out.println("\nbigger_recycle\n");
+	filename = "catalogs/bigger_recycle/catalog_bigger_recycle_";
+	evaluateWithMultipleUsingCatalog(traceFileName, filename);
+}
 	
+private static void evaluateWithMultipleUsingCatalog
+	(String traceFileName, String catalogName) 
+	throws InterruptedException, BufferManagerException, Exception
+{
 	for (int i = 0; i < 8; i++)
-	/* Para BNLJ*/ // for (int i = 4; i < 8; i++)
+	//for (int i = 4; i < 8; i++)
 	{
-		String filename = "catalogs/catalogSize" + i + ".xml";
+		String filename = catalogName + i + ".xml";
 		CatalogManager catalogManager = new CatalogManagerImpl("", filename);
 		catalogManager.loadCatalog();
-		
-		Catalog catalog = catalogManager.catalog();		
-		MainEvaluator.evaluateMultiple(pageReplacementStrategy, 
-								traceFileName, catalogManager);
+
+		MainEvaluator.evaluateMultiple
+			(pageReplacementStrategy, traceFileName, catalogManager);
+		}
 	}
-}
 \end{verbatimtab}
 
 
