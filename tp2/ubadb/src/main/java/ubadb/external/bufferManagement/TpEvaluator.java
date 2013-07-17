@@ -21,7 +21,7 @@ public class TpEvaluator
 		runBNLJTraces(pageReplacementStrategy);
 		//runFileScanTraces(pageReplacementStrategy);
 		//runIndexScanTraces(pageReplacementStrategy);		
-		//runOurTraces(pageReplacementStrategy);
+		//runRandomTraces(pageReplacementStrategy);
 	}
 	
 	@SuppressWarnings("unused")
@@ -70,7 +70,7 @@ public class TpEvaluator
 	}
 	
 	@SuppressWarnings("unused")
-	private static void runOurTraces(PageReplacementStrategy pageReplacementStrategy)
+	private static void runRandomTraces(PageReplacementStrategy pageReplacementStrategy)
 	{
 		List<String> traceFileNames = new LinkedList<String>();
 		

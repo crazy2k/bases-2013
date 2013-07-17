@@ -1,17 +1,192 @@
 \section{Resultados}
 
-\textsl{En esta secci\'on presentaremos los resultados obtenidos 
-al utilizar diferentes trazas.}
+% \textsl{En esta secci\'on presentaremos los resultados obtenidos 
+% al utilizar diferentes trazas.}
 
 \vspace*{0.3cm}
-
-Se presenta para cada traza el hit rate de cada buffer.
 
 \subsection{Trazas utilizadas}
 
 Las trazas que utilizamos fueron las generadas utilizando la
-clase \texttt{MainTraceGenerator.java} provista por la cátedra.
+clase \texttt{MainTraceGenerator.java} provista por la cátedra,
+y dos generadas por nosotros, estas son:
 
+\begin{itemize}
+    \item
+            \textbf{Random0}
+            Se ejecuta dos veces una transacci\'on sobre 100 bloques
+            distintos en una tabla de 200 bloques.
+            
+    \item
+            \textbf{Random1}
+            Se realizan 1000 accesos random a una tabla de 200 bloques.
+
+\end{itemize}
 
 Dichas trazas pueden encontrarse en la carpeta 
 \texttt{ubadb/generated}.
+
+
+\subsection{Generación de resultados}
+
+Modificamos la clase \texttt{MainEvaluator} para ofrecer la opción de
+evaluar una traza dada utilizando \texttt{SingleBufferPool}
+y \texttt{MultipleBufferPool}. 
+
+\vspace*{0.5cm}
+
+Creamos la clase \texttt{TpEvaluator}, ubicada en
+\texttt{core/external/bufferManagement}, que lo que hace es
+correr sets de trazas y evaluarlas usando \texttt{SingleBufferPool}
+y \texttt{MultipleBufferPool}
+
+\begin{verbatimtab}[4]
+public class TpEvaluator 
+{
+	public static void main(String[] args)
+	{
+		PageReplacementStrategy pageReplacementStrategy;
+		pageReplacementStrategy = new FIFOReplacementStrategy();
+	
+		runBNLJTraces(pageReplacementStrategy);
+		runFileScanTraces(pageReplacementStrategy);
+		runIndexScanTraces(pageReplacementStrategy);		
+		runRandomTraces(pageReplacementStrategy);
+	}
+
+	...
+}
+\end{verbatimtab}
+
+Cada función \texttt{runXTraces} crea una lista con los nombres de las trazas
+correspondientes y se lo pasa a la función \texttt{runTraces}.
+Por ejemplo, para el caso de \texttt{indexScan} se realiza lo siguiente
+
+\newpage
+
+\vspace*{-0.2cm}
+
+\begin{verbatimtab}[4]
+private static void runIndexScanTraces
+	(PageReplacementStrategy pageReplacementStrategy)
+{
+	List<String> traceFileNames = new LinkedList<String>();
+	
+	/* Index Scan. */
+	traceFileNames.add("generated/indexScanClustered-Product.trace");
+	traceFileNames.add("generated/indexScanClustered-Sale.trace");
+	traceFileNames.add("generated/indexScanUnclustered-Product.trace");
+	traceFileNames.add("generated/indexScanUnclustered-Sale.trace");
+	
+	System.out.println("\nIndex Scan\n");		
+	runTraces(pageReplacementStrategy, traceFileNames);
+}
+\end{verbatimtab}
+
+\texttt{runTraces} toma una lista de nombres de trazas y para cada una llama
+a las funciones correspondientes dpara evaluarla usando Single y Multiple buffer pools.
+
+\begin{verbatimtab}[4]
+private static void runTraces
+	(PageReplacementStrategy pageReplacementStrategy, List<String> traceFileNames)
+{
+	for (String traceFileName: traceFileNames)
+	{
+		try
+		{				
+			System.out.println("\nTrace: " + traceFileName);
+			evaluateWithSingle(pageReplacementStrategy, traceFileName);
+			evaluateWithMultiple(pageReplacementStrategy, traceFileName);
+		}
+		catch(Exception e)
+		{
+			System.out.println("FATAL ERROR (" + e.getMessage() + ")");
+			e.printStackTrace();
+		}
+	}
+}
+\end{verbatimtab}
+
+\texttt{evaluateWithSingle} toma diferentes tamaños de buffer, y para
+cada uno, evalúa la traza, llamando a la función correspondiente
+de \texttt{MainEvaluator}.
+
+\newpage
+
+\texttt{evaluateWithMultiple} lee diferentes catálogos, previamente
+creados, que puden encontrarse en \texttt{ubadb/catalogs}. 
+Cada uno de ellos tiene los buffers \texttt{Default, Keep, Recycle}
+con tamaños que van variando.
+
+\vspace*{0.5cm}
+
+Hicimos en cada caso que el tamaño de los 3 buffers fuera el mismo y
+que además se correspondiera con el del single. 
+Por ejemplo, si el tamaño utilizado para el single buffer pool era
+$15$, todos los buffers del multiple buffer pool también serán de 
+tamaño $15$.
+Para la asignación en buffer, pusimos una tabla en cada uno de los
+buffers.
+
+\vspace*{0.5cm}
+
+Para cada caso, se evalúa la traza, llamando a la función correspondiente
+de \texttt{MainEvaluator} y se muestra el hit rate obtenido.
+
+\vspace*{0.5cm}
+
+Para las trazas de \texttt{BNLJ} tuvimos en cuenta solamente tamaños
+de buffer que fueran grandes, porque si no teníamos un problema de
+que no nos alcanzaba la memoria para todos los pedidos.
+En el resto de los casos, usamos tanto los tamaños chicos como los
+grandes.
+
+\begin{verbatimtab}[4]
+private static void evaluateWithSingle
+	(PageReplacementStrategy pageReplacementStrategy, String traceFileName) 
+	throws InterruptedException, BufferManagerException, Exception
+{
+	/* Para BNLJ. */ //int sizes[] = {252, 300, 500, 700}; 
+	int sizes[] = {15, 20, 60, 120, 252, 300, 500, 700};
+	System.out.println("\nSingleBufferPool\n");
+	
+	for (int size : sizes)
+	{		
+		System.out.print(size + " ");
+		MainEvaluator.evaluateSingle(pageReplacementStrategy, traceFileName, size);			
+	}
+}
+\end{verbatimtab}
+
+\newpage
+\begin{verbatimtab}[4]
+private static void evaluateWithMultiple
+	(PageReplacementStrategy pageReplacementStrategy, String traceFileName) 
+	throws InterruptedException, BufferManagerException, Exception
+{	
+	System.out.println("\nMultipleBufferPool\n");
+	
+	for (int i = 0; i < 8; i++)
+	/* Para BNLJ*/ // for (int i = 4; i < 8; i++)
+	{
+		String filename = "catalogs/catalogSize" + i + ".xml";
+		CatalogManager catalogManager = new CatalogManagerImpl("", filename);
+		catalogManager.loadCatalog();
+		
+		Catalog catalog = catalogManager.catalog();		
+		MainEvaluator.evaluateMultiple(pageReplacementStrategy, 
+								traceFileName, catalogManager);
+	}
+}
+\end{verbatimtab}
+
+
+Los resultados obtenidos pueden encontrarse en \texttt{ubadb/results}
+
+
+\subsection{Resultados obtenidos}
+
+Los casos en los que el touch touch fue 0 se obviaron ya que no 
+aportaban para poder realizar comparaciones.
+
+
