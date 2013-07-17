@@ -41,8 +41,9 @@ public class Catalog
 		
 		for (PoolDescriptor p : poolDescriptors)
 		{
-			res += p.getName();
-			res += " : " + p.getSize() + " ";
+			//res += p.getName();
+			//res += " : ";
+			res += p.getSize() + " ";
 		}
 		
 		return res;

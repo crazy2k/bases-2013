@@ -16,32 +16,62 @@ public class TpEvaluator
 {	
 	public static void main(String[] args)
 	{
-		PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();		
+		PageReplacementStrategy pageReplacementStrategy = new FIFOReplacementStrategy();
+		
+		runBNLJTraces(pageReplacementStrategy);
+		//runFileScanTraces(pageReplacementStrategy); // 0 como debe ser
+		//runIndexScanTraces(pageReplacementStrategy);
+	}
+	
+	private static void runBNLJTraces(PageReplacementStrategy pageReplacementStrategy)
+	{
 		List<String> traceFileNames = new LinkedList<String>();
 
 		/* BNLJ */
-		//traceFileNames.add("generated/BNLJ-ProductXSale-group_50.trace");
-		//traceFileNames.add("generated/BNLJ-ProductXSale-group_75.trace");
-		//traceFileNames.add("generated/BNLJ-ProductXSale-group_100.trace"); // da memory full
-		//traceFileNames.add("generated/BNLJ-SaleXProduct-group_100.trace"); // da memory full
-		//traceFileNames.add("generated/BNLJ-SaleXProduct-group_250.trace"); // da memory full
+		traceFileNames.add("generated/BNLJ-ProductXSale-group_50.trace");
+		traceFileNames.add("generated/BNLJ-ProductXSale-group_75.trace");
+		traceFileNames.add("generated/BNLJ-ProductXSale-group_100.trace"); // da memory full
+		traceFileNames.add("generated/BNLJ-SaleXProduct-group_100.trace"); // da memory full
+		traceFileNames.add("generated/BNLJ-SaleXProduct-group_250.trace"); // da memory full
+		
+		System.out.println("\nBNLJ\n");		
+		runTraces(pageReplacementStrategy, traceFileNames);
+	}
+	
+	private static void runFileScanTraces(PageReplacementStrategy pageReplacementStrategy)
+	{
+		List<String> traceFileNames = new LinkedList<String>();
 		
 		/* File Scan. */			
 		traceFileNames.add("generated/fileScan-Company.trace");
-		//traceFileNames.add("generated/fileScan-Product.trace");
-		//traceFileNames.add("generated/fileScan-Sale.trace");
+		traceFileNames.add("generated/fileScan-Product.trace");
+		traceFileNames.add("generated/fileScan-Sale.trace");
+		
+		System.out.println("\nFile Scan\n");		
+		runTraces(pageReplacementStrategy, traceFileNames);
+	}
+	
+	private static void runIndexScanTraces(PageReplacementStrategy pageReplacementStrategy)
+	{
+		List<String> traceFileNames = new LinkedList<String>();
 		
 		/* Index Scan. */
-		//traceFileNames.add("generated/indexScanClustered-Product.trace");
-		//traceFileNames.add("generated/indexScanClustered-Sale.trace");
-		//traceFileNames.add("generated/indexScanUnclustered-Product.trace");
-		//traceFileNames.add("generated/indexScanUnclustered-Sale.trace");
+		traceFileNames.add("generated/indexScanClustered-Product.trace");
+		traceFileNames.add("generated/indexScanClustered-Sale.trace");
+		traceFileNames.add("generated/indexScanUnclustered-Product.trace");
+		traceFileNames.add("generated/indexScanUnclustered-Sale.trace");
 		
+		System.out.println("\nIndex Scan\n");		
+		runTraces(pageReplacementStrategy, traceFileNames);
+	}
+	
+	private static void runTraces(PageReplacementStrategy pageReplacementStrategy, List<String> traceFileNames)
+	{
 		for (String traceFileName: traceFileNames)
 		{
 			try
-			{
-				System.out.println("Trace: " + traceFileName);
+			{				
+				System.out.println("\nTrace: " + traceFileName);
 				evaluateWithSingle(pageReplacementStrategy, traceFileName);
 				evaluateWithMultiple(pageReplacementStrategy, traceFileName);
 			}
@@ -55,28 +85,33 @@ public class TpEvaluator
 	
 	private static void evaluateWithSingle(PageReplacementStrategy pageReplacementStrategy, String traceFileName) throws InterruptedException, BufferManagerException, Exception
 	{
-		int sizes[] = {5, 25, 50, 100};		
-		System.out.println("SingleBufferPool");
+		/* Para BNLJ. */ 
+		int sizes[] = {252, 300, 500, 700}; 
+		//int sizes[] = {15, 20, 60, 120, 252, 300, 500, 700}; // 5 10 20 40 
+		System.out.println("\nSingleBufferPool\n");
 		
 		for (int size : sizes)
 		{
-			System.out.print("BufferSize: " + size + " ");
-			MainEvaluator.evaluateSingle(pageReplacementStrategy, traceFileName, size);
+			//System.out.print("BufferSize: " + size + " ");
+			System.out.print(size + " ");
+			MainEvaluator.evaluateSingle(pageReplacementStrategy, traceFileName, size);			
 		}
 	}
 	
 	private static void evaluateWithMultiple(PageReplacementStrategy pageReplacementStrategy, String traceFileName) throws InterruptedException, BufferManagerException, Exception
 	{	
-		System.out.println("MultipleBufferPool");
+		System.out.println("\nMultipleBufferPool\n");
 		
-		for (int i = 0; i < 1; i++)
+		//for (int i = 0; i < 8; i++)
+		for (int i = 4; i < 8; i++)
 		{
 			String filename = "catalogs/catalogSize" + i + ".xml";
 			CatalogManager catalogManager = new CatalogManagerImpl("", filename);
 			catalogManager.loadCatalog();
 			
 			Catalog catalog = catalogManager.catalog();
-			System.out.print("BufferSize: " + catalog.listPoolDescriptors() + " ");
+			//System.out.print("BufferSizes " + catalog.listPoolDescriptors() + " ");
+			System.out.print(catalog.listPoolDescriptors() + " ");
 			MainEvaluator.evaluateMultiple(pageReplacementStrategy, traceFileName, catalogManager);
 		}
 	}

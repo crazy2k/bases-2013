@@ -36,10 +36,28 @@
 
     <ubadb.core.components.catalogManager.TableDescriptor>
       <tableId>
+        <internalName>Product_index</internalName>
+      </tableId>
+      <tableName>Product_index</tableName>
+      <tablePath>./Product_index</tablePath>
+      <tableBuffer>Keep</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
         <internalName>Sale</internalName>
       </tableId>
       <tableName>Sale</tableName>
       <tablePath>./Sale</tablePath>
+      <tableBuffer>Recycle</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Sale_index</internalName>
+      </tableId>
+      <tableName>Sale_index</tableName>
+      <tablePath>./Sale_index</tablePath>
       <tableBuffer>Recycle</tableBuffer>
     </ubadb.core.components.catalogManager.TableDescriptor>
 
