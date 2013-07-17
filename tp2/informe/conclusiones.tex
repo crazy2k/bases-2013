@@ -16,41 +16,92 @@ nunca van a estar en memoria.
 
 \textbf{indexScanUnclustered-Product} \\
 
-No hubo cambios, excepto cuando se usa el tamaño de recycle es más 
-grande, en cuyo caso empeora la performance para tamaños chicos.
+No hubieron cambios, excepto cuando se usa el tamaño de recycle es 
+más grande, en cuyo caso empeora la performance para tamaños chicos.
+
+\vspace*{0.5cm}
+
+\textbf{indexScanUnclustered-Sale} \\
+
+Al usar múltiples buffers vimos una mejora en la performance, 
+diferente en cada caso, pero en todos mejora, por ejemplo cuando
+el buffer keep es más grande, con el tamaño más chico da hit rate
+0 pero después va mejorando, en el caso de recycle sí se ven mejoras.
+Esto se debe a que la tabla Sale está asociada al buffer Recycle. 
 
 
+\subsection{Random}
 
-% Al dividir el espacio de memoria en distintos pools, uno por tabla,
-% el rendimiento disminuyó.
+\textbf{random0} \\
+
+Al usar múltiples buffers vimos una mejora en la performance, 
+diferente en cada caso, pero en todos mejora, siendo el caso
+en el que recycle es más grande el que mejores resultados da.
+
+\vspace*{0.5cm}
+
+\textbf{random1} \\
+
+Al usar el recycle más grande mejora la performance, pero al 
+tener keep más grande empeora. Como los accesos son random y
+no se repiten como en el caso anterior, es de esperar que la
+mejora no sea grande o que directamente no exista, que fue
+lo que ocurrió.
+
+
+\subsection{BNLJ}
+
+\textbf{BNLJ-ProductXSale-group\_50} \\
+
+En este caso el hit rate da 0 excepto en el caso en que recycle
+es más grande. Cuando esto ocurre solo en los buffers de tamaño
+más grande no da 0. Puede deberse a que la tabla Sale está 
+asociada al buffer Recycle. 
+
+\vspace*{0.5cm}
+
+\textbf{BNLJ-ProductXSale-group\_75} \\
+
+Ocurre lo mismo que en el caso anterior.
+
+
+\vspace*{0.5cm}
+
+\textbf{BNLJ-SaleXProduct-group\_100} \\
+
+En todos los casos de multiple buffer pools hubo una mejora, 
+y siempre fue la misma. Además para todos los tamaños que
+probamos el hit rate dio igual.
+
+
+\vspace*{0.5cm}
+
+\textbf{BNLJ-SaleXProduct-group\_250} \\
+
+En todos los casos de multiple buffer pools hubo una mejora, 
+y siempre fue la misma. Además para todos los tamaños que
+probamos el hit rate dio igual.
 
 \section{Conclusiones}
 
-% \vspace*{0.3cm}
+En algunos casos se pueden ver mejoras al utilizar multiple buffers,
+pero estas no son sustanciales. También depende mucho de la
+asignación de tablas a buffers.
+
+\vspace*{0.5cm}
 
 El rendimiento de cada estrategia depende fuertemente de la 
 estructura de la traza, y probablemente estos resultados se 
 deban a la naturaleza artificial de las utilizadas. 
-Por ejemplo, en general se supone que una estrategia LRU es
-razonable porque luego de acceder un bloque es probable que 
-esto vuelva a suceder. 
-
-\vspace*{0.5cm}
-
-Sin embargo, al armar una traza al azar o siguiendo algún 
-criterio arbitrario, esto no se verifica.
 
 \vspace*{0.5cm}
 
 Sería interesante, por lo tanto, realizar las pruebas con 
 trazas más reales, y con mayor cantidad, que que correspondan 
-a contextos variados, analizando si por ejemplo se verifica la
-cercanía temporal de los pedidos.
+a contextos variados, analizando si es verdad que vale la pena
+realizar el esfuerzo de utilizar multiple buffers.
 
 \vspace*{0.5cm}
 
 En esos caso, sería de esperar que las estrategias utilizadas
 por Oracle fueran eficientes.
-
-
-
