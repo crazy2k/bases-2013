@@ -1,0 +1,65 @@
+<ubadb.core.components.catalogManager.Catalog>
+
+  <poolDescriptors class="linked-list">
+    <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+      <name>Default</name>
+      <size>240</size>
+    </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+    <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+      <name>Keep</name>
+      <size>120</size>
+    </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+    <ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+      <name>Recycle</name>
+      <size>120</size>
+    </ubadb.core.components.bufferManager.bufferPool.pools.PoolDescriptor>
+  </poolDescriptors>
+
+  <tableDescriptors class="linked-list">
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Company</internalName>
+      </tableId>
+      <tableName>Company</tableName>
+      <tablePath>./Company</tablePath>
+      <tableBuffer>Default</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Product</internalName>
+      </tableId>
+      <tableName>Product</tableName>
+      <tablePath>./Product</tablePath>
+      <tableBuffer>Keep</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Product_index</internalName>
+      </tableId>
+      <tableName>Product_index</tableName>
+      <tablePath>./Product_index</tablePath>
+      <tableBuffer>Keep</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Sale</internalName>
+      </tableId>
+      <tableName>Sale</tableName>
+      <tablePath>./Sale</tablePath>
+      <tableBuffer>Recycle</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+    <ubadb.core.components.catalogManager.TableDescriptor>
+      <tableId>
+        <internalName>Sale_index</internalName>
+      </tableId>
+      <tableName>Sale_index</tableName>
+      <tablePath>./Sale_index</tablePath>
+      <tableBuffer>Recycle</tableBuffer>
+    </ubadb.core.components.catalogManager.TableDescriptor>
+
+  </tableDescriptors>
+</ubadb.core.components.catalogManager.Catalog>
