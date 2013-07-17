@@ -1,40 +1,56 @@
-\section{Conclusiones}
+\section{Análisis de Resultados}
 
 \textsl{En esta secci\'on presentaremos nuestras observaciones
 sobre las comparaciones explicadas en la secci\'on anterior.}
 
-% \vspace*{0.5cm}
+\vspace*{0.5cm}
+
+\subsection{FileScan}
+
+El hit rate siempre da 0, por la naturaleza de la traza, siempre se
+hace un request de una página e inmediatamente se libera, y nunca 
+se vuelve a hacer un request, por lo tanto las páginas pedidas
+nunca van a estar en memoria.
+
+\subsection{IndexScan}
+
+\textbf{indexScanUnclustered-Product} \\
+
+No hubo cambios, excepto cuando se usa el tamaño de recycle es más 
+grande, en cuyo caso empeora la performance para tamaños chicos.
+
+
 
 % Al dividir el espacio de memoria en distintos pools, uno por tabla,
 % el rendimiento disminuyó.
 
+\section{Conclusiones}
+
 % \vspace*{0.3cm}
 
-% El rendimiento de cada estrategia depende fuertemente de la 
-% estructura de la traza, y probablemente estos resultados se 
-% deban a la naturaleza artificial de las utilizadas. 
-% Por ejemplo, en general se supone que una estrategia LRU es
-% razonable porque luego de acceder un bloque es probable que 
-% esto vuelva a suceder. 
+El rendimiento de cada estrategia depende fuertemente de la 
+estructura de la traza, y probablemente estos resultados se 
+deban a la naturaleza artificial de las utilizadas. 
+Por ejemplo, en general se supone que una estrategia LRU es
+razonable porque luego de acceder un bloque es probable que 
+esto vuelva a suceder. 
 
-% \vspace*{0.5cm}
+\vspace*{0.5cm}
 
-% Sin embargo, al armar una traza al azar o siguiendo algún 
-% criterio arbitrario, esto no se verifica.
+Sin embargo, al armar una traza al azar o siguiendo algún 
+criterio arbitrario, esto no se verifica.
 
-% \vspace*{0.5cm}
+\vspace*{0.5cm}
 
-% Sería interesante, por lo tanto, realizar las pruebas con 
-% trazas más reales, y con mayor cantidad, que que correspondan 
-% a contextos variados, analizando si por ejemplo se verifica la
-% cercanía temporal de los pedidos.
+Sería interesante, por lo tanto, realizar las pruebas con 
+trazas más reales, y con mayor cantidad, que que correspondan 
+a contextos variados, analizando si por ejemplo se verifica la
+cercanía temporal de los pedidos.
 
-% \vspace*{0.5cm}
+\vspace*{0.5cm}
 
-% En esos caso, sería de esperar que las estrategias utilizadas
-% por Oracle fueran eficientes.
-
-
+En esos caso, sería de esperar que las estrategias utilizadas
+por Oracle fueran eficientes.
 
 
 
