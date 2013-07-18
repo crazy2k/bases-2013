@@ -1,0 +1,149 @@
+\section{Consultas}
+
+A continuación se presentan las consultas implementadas en SQL.
+
+\subsection*{Consulta 1}
+
+Mediante SQL escribir una consulta para obtener el nombre, apellido y número identificatorio
+de aquellos pasajeros que han viajado a todos los países cubiertos por la línea aérea en los
+últimos 5 años.
+
+
+\begin{small}
+\begin{verbatimtab}[2]
+
+SELECT dp.nombre, dp.apellido, u.id_user
+FROM Usuario u, DatosPersonales dp
+WHERE NOT EXISTS
+(
+    SELECT p.id_pais, p.nombre
+    FROM Vuelo v1, Aeropuerto a1, Ciudad c1, Pais p
+    WHERE (v1.a_salida = a1.id_a or v1.a_llegada = a1.id_a)
+    AND a1.id_ciudad = c1.id_ciudad
+    AND c1.id_pais = p.id_pais
+    AND NOT EXISTS
+    (
+	      SELECT *
+	      FROM Hace h, Reserva r, Tiene t, Servicio s, Vuelo v, 
+		      Aeropuerto a, Ciudad c, Estado e
+	      WHERE u.id_user = h.id_user 
+	      AND h.id_reserva = r.id_reserva 
+	      AND r.id_reserva = t.id_res 
+	      AND t.id_serv = s.id_servicio
+	      AND s.id_vuelo = v.id_vuelo 
+	      AND (v.a_llegada = a.id_a or v.a_salida = a.id_a) 
+	      AND a.id_ciudad = c.id_ciudad 
+	      AND c.id_pais = p.id_pais
+	      AND r.id_estado = 3
+	      AND ((s.salida >= date_sub(now(), interval 5 year)) 
+		      OR (s.llegada >= date_sub(now(), interval 5 year)))  
+    )
+)
+AND u.id_user = dp.id_user
+
+\end{verbatimtab}
+\end{small}
+
+\newpage
+
+\subsection*{Consulta 2}
+
+Obtener un reporte que como mínimo contenga: Todos los códigos identificatorios de los
+aeropuertos, un periodo de tiempo de la forma año/mes, la cantidad de pasajeros que
+ascendieron y descendieron en ese aeropuerto durante el periodo. El reporte debe estar
+ordenado por la cantidad total de personas que viajaron. Y debe ser ejecutado para un rango
+de fechas. Aclaración: dependiendo del rango de fechas, para un mismo aeropuerto pueden
+aparecer varios periodos distintos.
+
+\begin{small}
+\begin{verbatimtab}[2]
+
+\end{verbatimtab}
+\end{small}
+
+
+\newpage
+
+\subsection*{Consulta 3}
+
+Controlar mediante alguna restricción que un usuario no pueda realizar reservas que se
+superpongan en el tiempo. La única excepción que se permite consiste en que un usuario
+puede realizar a lo sumo 2 reservas para la misma fecha de viaje entre los mismos
+aeropuertos de origen y destino, siempre que la fecha de partida no se encuentre dentro de
+los próximos 7 días.
+
+\begin{small}
+\begin{verbatimtab}[2]
+CREATE TRIGGER chequear_reservas_superpuestas
+BEFORE INSERT ON Tiene
+FOR EACH ROW
+begin
+	IF EXISTS (
+		SELECT h1.id_reserva, h1.id_user
+		FROM Hace h1, Servicio s1, Usuario u1, Reserva r1
+		WHERE h1.id_user = u1.id_user AND
+			h1.id_reserva = r1.id_reserva AND
+			NEW.id_res = r1.id_reserva AND
+			NEW.id_serv = s1.id_servicio
+			AND EXISTS(
+			    SELECT s2.salida
+			    FROM Servicio s2, Tiene t2, Reserva r2, Hace h2
+			    WHERE h2.id_user = u1.id_user
+				AND h2.id_reserva <> h1.id_reserva
+				AND h2.id_reserva = r2.id_reserva
+				AND t2.id_res = r2.id_reserva
+				AND t2.id_serv = s2.id_servicio
+				AND s2.salida = s1.salida
+				AND s1.id_servicio <> s2.id_servicio
+				AND s2.salida NOT IN (
+					    (SELECT s3.salida
+					    FROM Reserva r3, Hace h3, Tiene t3, Servicio s3, Usuario u3, Vuelo v3
+					    WHERE r3.id_reserva = h3.id_reserva
+						    AND r3.id_reserva = t3.id_res
+						    AND u3.id_user = h3.id_user
+						    AND t3.id_serv = s3.id_servicio
+						    AND s3.id_vuelo = v3.id_vuelo
+						    AND s3.salida IN (
+								    SELECT s4.salida
+								    FROM Servicio s4, Hace h4, Tiene t4, Reserva r4, Vuelo v4
+								    WHERE r4.id_reserva <> r3.id_reserva
+									    AND h4.id_reserva = r4.id_reserva
+									    AND h4.id_user = h3.id_user
+									    AND r4.id_reserva = t4.id_res
+									    AND t4.id_serv = s4.id_servicio
+									    AND s4.id_vuelo = v4.id_vuelo
+									    AND v4.a_salida = v3.a_salida
+									    AND v4.a_llegada = v4.a_llegada
+									    AND datediff(s4.salida, now()) > 7)
+								    ) 
+							    )
+	)) THEN
+		SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'No se puede insertar la reserva';
+	END IF;
+end;
+\end{verbatimtab}
+\end{small}
+
+
+Para poder imponer esta restricción, usamos un trigger, que cuando ocurre el evento: 
+insertar en la tabla Tiene (tabla que relaciona las reservas con los servicios), se fija
+que la reserva a la cual está asociada esta tabla no tenga como fecha de salida de vuelo
+la misma fecha de salida de otras reservas del mismo usuario, salvo que la fecha de partida
+del vuelo no sea dentro de la próxima semana. En caso de que tengta la misma fecha de salida
+se dispara una excepción inexistente de manera tal que no se concreta la operación.
+
+\newpage
+
+\subsection*{Consulta 4}
+
+Para las reservas superpuestas que se permiten en el punto anterior, se debe contar con una
+funcionalidad que cancele una de las reservas duplicadas (la más económica) cuando la
+fecha de partida se encuentre dentro de los próximos 7 días.
+
+
+\begin{small}
+\begin{verbatimtab}[2]
+
+\end{verbatimtab}
+\end{small}
