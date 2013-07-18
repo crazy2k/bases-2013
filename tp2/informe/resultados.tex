@@ -228,9 +228,35 @@ Los resultados obtenidos pueden encontrarse en \texttt{ubadb/results}
 Los casos en los que el touch touch fue 0 se obviaron ya que no 
 aportaban para poder realizar comparaciones.
 
+Se encajo una curva a todos los puntos a la vez, esto nos deja ver
+el ``caso promedio'', y teniendo esto en cuenta podemos saber en 
+qué casos se mejora la performance y en qué casos no.
+
+\begin{figure}[H] \centering
+    \subfloat[Random0]
+    {\includegraphics[scale = 0.7]{./img/Random0.pdf}}
+\end{figure} 
+
+\vspace*{0.3cm}
+
+\begin{figure}[H] \centering
+    \subfloat[Random1]
+    {\includegraphics[scale = 0.7]{./img/Random1.pdf}}
+\end{figure} 
+
+\begin{figure}[H] \centering
+    \subfloat[BNLJ-SaleXProduct-group\_100]
+    {\includegraphics[scale = 0.7]{./img/BNLJ-SaleXProduct-group_100_g.pdf}}
+\end{figure}
 
 %\begin{figure}[H] \centering
-    %\subfloat[random0]
-    %{\includegraphics[resize=]{./img/random0.png}}
-    %{}
-%\end{figure} 
+    %\subfloat[indexScanUnclustered-Product]
+    %{\includegraphics[scale = 0.8]{./img/indexScanUnclustered-Product_g.pdf}}
+%\end{figure}
+
+\vspace*{0.5cm}
+
+\begin{figure}[H] \centering
+    \subfloat[indexScanUnclustered-Sale]
+    {\includegraphics[scale = 0.7]{./img/indexScanUnclustered-Sale_g.pdf}}
+\end{figure}

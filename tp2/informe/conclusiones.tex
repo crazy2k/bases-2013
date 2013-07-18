@@ -12,6 +12,28 @@ hace un request de una página e inmediatamente se libera, y nunca
 se vuelve a hacer un request, por lo tanto las páginas pedidas
 nunca van a estar en memoria.
 
+
+\subsection{Random}
+
+\textbf{random0} \\
+
+Al usar recycle como buffer más grande mejora la performance, en
+los otros casos los resultados son todos bastante similares.
+Puede verse en el gráfico que todos los valores que no corresponden
+al caso de recycle están muy cerca entre sí.
+
+\vspace*{0.5cm}
+
+\textbf{random1} \\
+
+Al usar el recycle más grande mejora la performance, pero al 
+tener keep más grande empeora. Como los accesos son random y
+no se repiten como en el caso anterior, es de esperar que la
+mejora no sea grande o que directamente no exista, que fue
+lo que ocurrió.
+Se ven que hay varios puntos que están por debajo de la curva.
+
+
 \subsection{IndexScan}
 
 \textbf{indexScanUnclustered-Product} \\
@@ -29,24 +51,10 @@ el buffer keep es más grande, con el tamaño más chico da hit rate
 0 pero después va mejorando, en el caso de recycle sí se ven mejoras.
 Esto se debe a que la tabla Sale está asociada al buffer Recycle. 
 
+Notamos que no hubo mucha variabilid, aunque a veces mejorara y 
+a veces empeorara, todos los valores obtenidos están bastante
+cerca entre sí.
 
-\subsection{Random}
-
-\textbf{random0} \\
-
-Al usar múltiples buffers vimos una mejora en la performance, 
-diferente en cada caso, pero en todos mejora, siendo el caso
-en el que recycle es más grande el que mejores resultados da.
-
-\vspace*{0.5cm}
-
-\textbf{random1} \\
-
-Al usar el recycle más grande mejora la performance, pero al 
-tener keep más grande empeora. Como los accesos son random y
-no se repiten como en el caso anterior, es de esperar que la
-mejora no sea grande o que directamente no exista, que fue
-lo que ocurrió.
 
 
 \subsection{BNLJ}
@@ -72,6 +80,13 @@ Ocurre lo mismo que en el caso anterior.
 En todos los casos de multiple buffer pools hubo una mejora, 
 y siempre fue la misma. Además para todos los tamaños que
 probamos el hit rate dio igual.
+
+\vspace*{0.3cm}
+
+Como se puede ver en el gráfico correspondiente, la mejora 
+es muy grande. La curva que está graficada corresponde a los 
+valores de hit rate de single buffer pool, y los puntos que están
+sobre la curva corresponden a los de multiple buffer pools.
 
 
 \vspace*{0.5cm}
