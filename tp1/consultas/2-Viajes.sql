@@ -1,14 +1,14 @@
 SELECT 	(s.cant + l.cant) AS cant_total, 
 			s.cant, 
 			l.cant, 
-			s.salida, 
-			l.llegada,
+			date_format(s.salida, '%m %y') AS salida, 
+			date_format(l.llegada, '%m %y') AS llegada,
 			s.id_a,
 			l.id_a
 			
 	FROM 	(
 			SELECT 	COUNT(*) AS cant, 
-					date_format(salida, '%m %y') AS salida , 
+					salida, 
 					id_a 
 
 			FROM	(
@@ -33,13 +33,13 @@ SELECT 	(s.cant + l.cant) AS cant_total,
 						AND u.id_user = h.id_user
 					) us_por_a
 
-			GROUP BY salida, id_a
+			GROUP BY MONTH(salida), YEAR(salida), id_a
 			HAVING 	date_format(salida, '%m %y') between '06 13' AND '08 13'
 			)  s,
 
 			(
 			SELECT 	COUNT(*) AS cant, 
-					date_format(llegada, '%m %y') AS llegada, 
+					llegada, 
 					id_a 
 
 			FROM	(
@@ -64,7 +64,7 @@ SELECT 	(s.cant + l.cant) AS cant_total,
 						AND u.id_user = h.id_user
 					) us_por_a
 
-			GROUP BY llegada, id_a
+			GROUP BY MONTH(llegada), YEAR(llegada), id_a
 			HAVING 	date_format(llegada, '%m %y') between '06 13' AND '08 13'
 			)  l
 
